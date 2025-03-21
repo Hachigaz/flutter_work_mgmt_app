@@ -14,7 +14,7 @@ class _ReportScheduleListItem extends StatelessWidget {
   final ReportSchedule schedule;
 
   void onTapReportItem({required BuildContext context, required ID reportId}) {
-    context.go("${context.namedLocation("reports")}/$reportId/details");
+    context.go("${context.namedLocation("reports")}/$reportId/detail");
   }
 
   const _ReportScheduleListItem({required this.schedule});
@@ -158,7 +158,7 @@ class _TaskReportInfoSection extends StatelessWidget {
   const _TaskReportInfoSection();
 
   void onClickGenerateReportButton(BuildContext context) {
-    context.push("${context.namedLocation("reports")}/detail/1");
+    context.push("${context.namedLocation("reports")}/1/detail");
   }
 
   @override

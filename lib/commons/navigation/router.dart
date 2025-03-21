@@ -245,20 +245,37 @@ final routes = <RouteBase>[
                 routes: [
                   GoRoute(
                     path: "/:id",
-                    pageBuilder: (context, state) {
-                      return MaterialPage(
-                        key: state.pageKey,
-                        child: BlocProvider<ReportFormBloc>(
-                          create:
-                              (context) => ReportFormBloc(
-                                buildType: BuildType.type_default,
-                                reportFormStructureId: 1,
-                                reportFormId: 1,
-                              ),
-                          child: ReportFormViewPage(),
-                        ),
-                      );
+                    builder: (context, state) {
+                      return Container();
                     },
+                    routes: [
+                      ShellRoute(
+                        pageBuilder: (context, state, child) {
+                          final ID taskId = ID.parse(
+                            state.pathParameters['id']!,
+                          );
+                          return MaterialPage(
+                            child: BlocProvider<ReportFormBloc>(
+                              create:
+                                  (context) => ReportFormBloc(
+                                    buildType: BuildType.type_default,
+                                    reportFormStructureId: 1,
+                                    reportFormId: 1,
+                                  ),
+                              child: child,
+                            ),
+                          );
+                        },
+                        routes: [
+                          GoRoute(
+                            path: "/detail",
+                            builder: (context, state) {
+                              return ReportFormViewPage();
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ],
               ),
