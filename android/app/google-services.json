@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "833752702329",
+    "project_id": "fir-1-ab22d",
+    "storage_bucket": "fir-1-ab22d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833752702329:android:7d739ac78feaee8fc1e3a8",
+        "android_client_info": {
+          "package_name": "com.example.flutter_work_mgmt_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_k5rZPlRCsBAEQA-YsmbKOQv_2kapKqw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
