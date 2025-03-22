@@ -10,10 +10,10 @@ import 'package:flutter_work_mgmt_app/commons/models/model.dart';
 import 'package:flutter_work_mgmt_app/commons/models/project.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_list_section.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/swipable_list_view.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/defs/const_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/color_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/common_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/input_style_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/color_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/input_style_presets.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/work/bloc/work_item_detail_bloc.dart';
 
 part 'views/work_item_info_section.dart';

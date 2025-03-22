@@ -1,94 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/task_repository.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/bloc/list_view_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/list_view_widget.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/search_bar_widget.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_work_mgmt_app/commons/models/project.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/defs/const_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/common_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/date_formats.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/input_style_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/work/bloc/work_item_detail_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/date_formats.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/input_style_presets.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/work/subpages/task_manage/bloc/task_manage_bloc.dart';
 
-part "views/task_detail_task_list_section.dart";
-
-class _WorkItemSearchBarWidget extends StatelessWidget {
-  final _searchFieldController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = appThemeData.colorScheme;
-    final typography = appThemeData.typography;
-    return BlocBuilder<TaskManageTaskListBloc, TaskManageTaskListState>(
-      builder: (context, state) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 200.w,
-                child: TextField(
-                  enabled: state is! TaskManageTaskListStateLoading,
-                  style: typography.base,
-                  cursorColor: colorScheme.primary,
-                  cursorErrorColor: colorScheme.error,
-                  keyboardType: TextInputType.text,
-                  decoration: input_dec_bordered.copyWith(
-                    hintText: "Nhập tên công việc",
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: colorScheme.secondaryForeground,
-                      size: 30,
-                    ),
-                  ),
-                  maxLines: 1,
-                  onSubmitted: (value) {
-                    if (state is! TaskManageTaskListStateLoading) {
-                      context.read<TaskManageTaskListBloc>().add(
-                        TaskManageTaskListEventSearchCall(searchValue: value),
-                      );
-                    }
-                  },
-                ),
-              ),
-              const SizedBox(width: 10),
-              if (state is TaskManageTaskListStateLoading)
-                CircularProgressIndicator(
-                  color: colorScheme.secondaryForeground,
-                ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
+part "views/task_manage_task_list_section.dart";
 
 class _WorkItemTaskManagePageContent extends StatelessWidget {
-  final _scrollController = ScrollController();
-
-  void _onScroll({required BuildContext context}) {
-    if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent) {
-      final taskListBloc = context.read<TaskManageTaskListBloc>();
-      if (!taskListBloc.state.isLast &&
-          taskListBloc.state is TaskManageTaskListStateReady) {
-        taskListBloc.add(TaskManageTaskListEventLoadMoreCall());
-      }
-    }
-  }
-
+  final scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
-    _scrollController.addListener(() {
-      _onScroll(context: context);
-    });
-
     return ListView(
-      controller: _scrollController,
+      controller: scrollController,
       padding: EdgeInsets.all(0),
-      children: [_WorkItemSearchBarWidget(), _WorkItemTaskListViewSection()],
+      children: [
+        _WorkItemTaskListViewSection(scrollController: scrollController),
+      ],
     );
   }
 }

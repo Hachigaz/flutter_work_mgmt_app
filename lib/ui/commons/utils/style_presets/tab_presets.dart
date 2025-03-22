@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/painting.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/common_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
 
 final _tabStyle = appThemeData.tabsStyle;
 

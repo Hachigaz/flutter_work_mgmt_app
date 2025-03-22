@@ -1,8 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter_color/flutter_color.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/helpers/colors.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/common_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/color/color_helpers.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
 
 final _colorScheme = appThemeData.colorScheme;
 

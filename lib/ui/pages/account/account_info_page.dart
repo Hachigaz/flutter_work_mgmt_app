@@ -6,12 +6,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_work_mgmt_app/commons/models/account.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/app_provider/auth_repo.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/defs/const_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/helpers/colors.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/common_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/date_formats.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/input_style_presets.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/app_providers/auth_repo.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/color/color_helpers.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/date_formats.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/input_style_presets.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/account/bloc/account_info_page_repository.dart';
 
 final double _background_y_offset = -420.r;

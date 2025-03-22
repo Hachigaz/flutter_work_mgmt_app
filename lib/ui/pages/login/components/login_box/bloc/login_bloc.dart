@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:validators/validators.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/app_provider/auth_repo.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/app_providers/auth_repo.dart';
 
 part "login_event.dart";
 part "login_state.dart";

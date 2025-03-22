@@ -4,9 +4,9 @@ import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_work_mgmt_app/commons/models/model.dart';
 import 'package:flutter_work_mgmt_app/commons/models/project.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/defs/const_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/color_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/common_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/color_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/projects/subpages/project_detail/bloc/project_detail_repo.dart';
 
 class _WorkItemListDisplayItem extends StatelessWidget {

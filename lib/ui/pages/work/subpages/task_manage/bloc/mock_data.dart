@@ -51,35 +51,3 @@ final List<TaskRecord> _searchTaskList = <TaskRecord>[
     isActive: true,
   ),
 ];
-
-List<TaskRecord> _addTaskList({int count = 3}) {
-  final List<TaskRecord> taskRecs = [];
-  for (var i = 0; i < count; i++) {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    final random = Random();
-    final stringName = String.fromCharCodes(
-      List.generate(
-        3,
-        (index) => chars.codeUnitAt(random.nextInt(chars.length)),
-      ),
-    );
-    final stringShort = String.fromCharCodes(
-      List.generate(
-        2,
-        (index) => chars.codeUnitAt(random.nextInt(chars.length)),
-      ),
-    );
-
-    taskRecs.add(
-      TaskRecord(
-        id: 1,
-        workId: 1,
-        name: "Task $stringShort $stringName",
-        nameShort: "Task $stringShort",
-        status: TaskStatus.active,
-        isActive: true,
-      ),
-    );
-  }
-  return taskRecs;
-}

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/defs/const_defs.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
 
 class SwipableListView extends StatelessWidget {
   final List<Widget> _children;

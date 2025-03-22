@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/defs/const_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/common_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/input_style_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/input_style_presets.dart';
 
 class ImagePickerField extends StatefulWidget {
   final Widget? label;

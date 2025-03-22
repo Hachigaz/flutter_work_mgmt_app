@@ -7,9 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forui/forui.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/input_fields/image_field.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_list_section.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/defs/const_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/common_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/input_style_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/input_style_presets.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/report/bloc/report_form_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/report/commons/form_builder/models/models.dart';
 

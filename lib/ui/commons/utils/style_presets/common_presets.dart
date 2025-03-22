@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/color_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/color_presets.dart';
 
 final FThemeData appThemeData = FThemes.green.dark;
 

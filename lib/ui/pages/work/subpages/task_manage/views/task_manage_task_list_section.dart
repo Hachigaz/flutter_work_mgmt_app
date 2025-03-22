@@ -75,35 +75,65 @@ class _TaskListDisplayItem extends StatelessWidget {
 }
 
 class _WorkItemTaskListViewSection extends StatelessWidget {
+  final ScrollController scrollController;
+
+  const _WorkItemTaskListViewSection({required this.scrollController});
   @override
   Widget build(BuildContext context) {
     final typography = appThemeData.typography;
     final colorScheme = appThemeData.colorScheme;
+    // return Padding(
+    //   padding: EdgeInsets.symmetric(vertical: padding_lg),
+    //   child: BlocBuilder<WorkItemDetailBloc, WorkItemDetailState>(
+    //     builder: (context, workItemState) {
+    //       if (workItemState is WorkItemDetailStateReady) {
+    //         return BlocBuilder<TaskManageTaskListBloc, TaskManageTaskListState>(
+    //           builder: (context, taskListState) {
+    //             return Column(
+    //               children: [
+    //                 for (final task in taskListState.taskList)
+    //                   _TaskListDisplayItem(taskRecord: task),
+    //               ],
+    //             );
+    //           },
+    //         );
+    //       } else {
+    //         return Align(
+    //           alignment: Alignment.center,
+    //           child: CircularProgressIndicator(color: colorScheme.primary),
+    //         );
+    //       }
+    //     },
+    //     buildWhen: (previous, current) {
+    //       return previous is! WorkItemDetailStateReady;
+    //     },
+    //   ),
+    // );
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: padding_lg),
-      child: BlocBuilder<WorkItemDetailBloc, WorkItemDetailState>(
-        builder: (context, workItemState) {
-          if (workItemState is WorkItemDetailStateReady) {
-            return BlocBuilder<TaskManageTaskListBloc, TaskManageTaskListState>(
-              builder: (context, taskListState) {
-                return Column(
-                  children: [
-                    for (final task in taskListState.taskList)
-                      _TaskListDisplayItem(taskRecord: task),
-                  ],
-                );
-              },
-            );
-          } else {
-            return Align(
-              alignment: Alignment.center,
-              child: CircularProgressIndicator(color: colorScheme.primary),
-            );
-          }
-        },
-        buildWhen: (previous, current) {
-          return previous is! WorkItemDetailStateReady;
-        },
+      child: Column(
+        children: [
+          SearchBarWidget<
+            ListViewBloc<TaskRecord>,
+            ListViewState<TaskRecord>,
+            ListViewEvent<TaskRecord>,
+            ListViewStateLoading<TaskRecord>,
+            ListViewEventSearchCall<TaskRecord>
+          >(
+            hintText: "Nhập tên công việc",
+            searchCallCreator:
+                (searchValue) => ListViewEventSearchCall<TaskRecord>(
+                  searchValue: searchValue,
+                ),
+          ),
+          ListViewWidget<TaskRecord>(
+            listItemBuilder: (taskRecord) {
+              return _TaskListDisplayItem(taskRecord: taskRecord);
+            },
+            scrollController: scrollController,
+          ),
+        ],
       ),
     );
   }

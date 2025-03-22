@@ -1,14 +1,21 @@
-part of "../task_detail_page.dart";
-
-class _RecurringTaskReportSection extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(children: [
-
-      ],
-    );
-  }
-}
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_color/flutter_color.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_work_mgmt_app/commons/models/model.dart';
+import 'package:flutter_work_mgmt_app/commons/models/report.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/report_repository.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/bloc/list_view_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/list_view_widget.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/page_list_section.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/search_bar_widget.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/date_formats.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/input_style_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/task/bloc/task_detail_bloc.dart';
+import 'package:forui/forui.dart';
+import 'package:go_router/go_router.dart';
 
 class _ReportScheduleListItem extends StatelessWidget {
   final ReportSchedule schedule;
@@ -109,7 +116,9 @@ class _ReportScheduleListItem extends StatelessWidget {
                         );
                       },
                       child: Text(
-                        "Lập báo cáo",
+                        (schedule.reportId == null)
+                            ? "Lập báo cáo"
+                            : "Chỉnh sửa",
                         style: typography.sm.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
@@ -126,7 +135,93 @@ class _ReportScheduleListItem extends StatelessWidget {
   }
 }
 
-class _TimestampTaskReportSection extends StatelessWidget {
+class _ReportScheduleNotSentListItem extends StatelessWidget {
+  final ReportSchedule schedule;
+
+  const _ReportScheduleNotSentListItem({required this.schedule});
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = appThemeData.colorScheme;
+    final typography = appThemeData.typography;
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 8),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: colorScheme.primary.darker(35).withAlpha(150),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              schedule.title!,
+              style: typography.lg.copyWith(fontWeight: FontWeight.w600),
+            ),
+            Text("Hạn báo cáo: ${date_fmat_date.format(schedule.dueDate!)}"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(),
+                ElevatedButton(
+                  onPressed: () {
+                    print("chỉnh sửa");
+                  },
+                  style: button_style_primary.copyWith(
+                    backgroundColor: WidgetStateProperty.all<Color>(
+                      colorScheme.primary.lighter(20).withAlpha(200),
+                    ),
+                  ),
+                  child: Text(
+                    "Chỉnh sửa",
+                    style: typography.base.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _NotSentReportSection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          child: SearchBarWidget<
+            ListViewBloc<ReportSchedule>,
+            ListViewState<ReportSchedule>,
+            ListViewEvent<ReportSchedule>,
+            ListViewStateLoading<ReportSchedule>,
+            ListViewEventSearchCall<ReportSchedule>
+          >(
+            hintText: "Nhập tên báo cáo",
+            searchCallCreator:
+                (value) =>
+                    ListViewEventSearchCall<ReportSchedule>(searchValue: value),
+          ),
+        ),
+        ListViewWidget<ReportSchedule>(
+          listItemBuilder: (item) {
+            return _ReportScheduleNotSentListItem(schedule: item);
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _UpcomingReportSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = appThemeData.colorScheme;
@@ -154,8 +249,8 @@ class _TimestampTaskReportSection extends StatelessWidget {
   }
 }
 
-class _TaskReportInfoSection extends StatelessWidget {
-  const _TaskReportInfoSection();
+class TaskReportInfoSection extends StatelessWidget {
+  const TaskReportInfoSection({super.key});
 
   void onClickGenerateReportButton(BuildContext context) {
     context.push("${context.namedLocation("reports")}/1/detail");
@@ -189,11 +284,11 @@ class _TaskReportInfoSection extends StatelessWidget {
           tabs: [
             FTabEntry(
               label: Text("Lịch báo cáo"),
-              content: _TimestampTaskReportSection(),
+              content: _UpcomingReportSection(),
             ),
             FTabEntry(
-              label: Text("Báo cáo đã lưu"),
-              content: _RecurringTaskReportSection(),
+              label: Text("Báo cáo chưa gửi"),
+              content: _NotSentReportSection(),
             ),
           ],
         ),

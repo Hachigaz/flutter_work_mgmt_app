@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_color/flutter_color.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/defs/const_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/helpers/colors.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/common_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/color/color_helpers.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
 
 final _typography = appThemeData.typography;
 final _colorScheme = appThemeData.colorScheme;

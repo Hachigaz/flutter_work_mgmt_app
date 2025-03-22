@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/helpers/colors.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/common_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/color/color_helpers.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
 
 final _colorScheme = appThemeData.colorScheme;
 

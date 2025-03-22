@@ -9,13 +9,13 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_work_mgmt_app/commons/models/model.dart';
 
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_list_section.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/color_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/color_presets.dart';
 
-import 'package:flutter_work_mgmt_app/ui/commons/presets/common_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
 
-import 'package:flutter_work_mgmt_app/ui/commons/defs/const_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/date_formats.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/presets/input_style_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/date_formats.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/input_style_presets.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/projects/subpages/project_detail/bloc/project_detail_repo.dart';
 
 part "views/project_detail_info_section.dart";

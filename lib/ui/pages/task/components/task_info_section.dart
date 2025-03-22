@@ -1,7 +1,13 @@
-part of "../task_detail_page.dart";
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/description_display_widget.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/page_list_section.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/task/bloc/task_detail_bloc.dart';
 
-class _TaskInfoSection extends StatelessWidget {
-  const _TaskInfoSection();
+class TaskInfoSection extends StatelessWidget {
+  const TaskInfoSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,8 +75,8 @@ class _TaskInfoSection extends StatelessWidget {
   }
 }
 
-class _TaskInfoDescriptionSection extends StatelessWidget {
-  const _TaskInfoDescriptionSection();
+class TaskInfoDescriptionSection extends StatelessWidget {
+  const TaskInfoDescriptionSection({super.key});
   @override
   Widget build(BuildContext context) {
     final typography = appThemeData.typography;

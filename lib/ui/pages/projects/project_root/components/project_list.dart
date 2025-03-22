@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_work_mgmt_app/commons/models/project.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/defs/const_defs.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/projects/project_root/components/project_display_item.dart';
 
 class ProjectListDisplay extends StatelessWidget {

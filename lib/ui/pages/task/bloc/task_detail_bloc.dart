@@ -5,13 +5,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_work_mgmt_app/commons/models/model.dart';
 import 'package:flutter_work_mgmt_app/commons/models/project.dart';
 import 'package:flutter_work_mgmt_app/commons/models/report.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/report_schedule_repository.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/task_repository.dart';
 
 part "task_detail_event.dart";
 part "task_detail_state.dart";
-part "mock_data.dart";
 
 class TaskDetailBloc extends Bloc<TaskDetailEvent, TaskDetailState> {
-  TaskDetailBloc({required ID taskId}) : super(TaskDetailState()) {
+  final TaskRepository taskRepo;
+  final ReportScheduleRepository scheduleRepo;
+
+  TaskDetailBloc({
+    required ID taskId,
+    required this.taskRepo,
+    required this.scheduleRepo,
+  }) : super(TaskDetailState()) {
     on<TaskDetailEventInit>(_onTaskDetailInit);
     add(TaskDetailEventInit());
   }
@@ -25,17 +33,12 @@ class TaskDetailBloc extends Bloc<TaskDetailEvent, TaskDetailState> {
     TaskRecord taskRecord = TaskRecord();
 
     List<ReportSchedule>? reportSchedules;
-    // List<ReportRecurringSchedule>? recurringSchedules;
-
-    List<TaskReportRecord>? recentReports;
 
     await Future.delayed(
       Duration(seconds: 2),
       () => {
-        taskRecord = _taskRecord,
-        reportSchedules = _reportSchedules,
-        // recurringSchedules = _recurringSchedules,
-        recentReports = _recentReports,
+        taskRecord = taskRepo.getOne(),
+        reportSchedules = scheduleRepo.search("").itemList,
       },
     );
 
@@ -43,8 +46,6 @@ class TaskDetailBloc extends Bloc<TaskDetailEvent, TaskDetailState> {
       TaskDetailStateReady(
         taskRecord: taskRecord,
         reportSchedules: reportSchedules,
-        // recurringSchedules: recurringSchedules,
-        recentReports: recentReports,
       ),
     );
   }
