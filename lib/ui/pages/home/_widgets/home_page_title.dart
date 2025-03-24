@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
+import 'package:forui/forui.dart';
 
 class HomePageAppTitle extends StatelessWidget {
   const HomePageAppTitle({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final typography = appThemeData.typography;
+    final typography = context.theme.typography;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

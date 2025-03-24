@@ -5,7 +5,9 @@ import 'package:flutter_work_mgmt_app/commons/navigation/_routes/_projects/_cont
 import 'package:flutter_work_mgmt_app/commons/navigation/_routes/_projects/_reports/reports.dart';
 import 'package:flutter_work_mgmt_app/commons/navigation/_routes/_projects/_tasks/tasks.dart';
 import 'package:flutter_work_mgmt_app/commons/navigation/_routes/_projects/_works/works.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/projects/subpages/project_detail/bloc/project_detail_repo.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/data_repositories/project_repository.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/data_repositories/work_item_repository.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/projects/subpages/project_detail/bloc/project_detail_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/projects/subpages/project_detail/project_detail_page.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/projects/subpages/project_detail/subpages/work_manage/project_work_manage_page.dart';
 import 'package:go_router/go_router.dart';
@@ -27,10 +29,13 @@ final projectRoutes = <RouteBase>[
 
           return MaterialPage(
             key: state.pageKey,
-            child: RepositoryProvider<ProjectDetailPageRepository>(
+            child: RepositoryProvider<ProjectDetailBloc>(
               create:
-                  (context) =>
-                      ProjectDetailPageRepository(projectId: projectId),
+                  (context) => ProjectDetailBloc(
+                    recordId: projectId,
+                    dataRepo: context.read<ProjectRepository>(),
+                    workItemRepo: context.read<WorkItemRepository>(),
+                  ),
               child: child,
             ),
           );

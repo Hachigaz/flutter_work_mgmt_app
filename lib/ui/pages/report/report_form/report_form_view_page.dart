@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/loading_widgets/loading_circle_widget.dart';
+import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/report/bloc/report_form_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/report/commons/form_builder/bloc/report_form_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/report/commons/form_builder/views/report_form.dart';
 
 class _ReportFormViewPageContent extends StatelessWidget {
@@ -16,8 +17,8 @@ class ReportFormViewPage extends StatelessWidget {
   const ReportFormViewPage({super.key});
 
   AppBar _ReportFormViewPageHeader({required BuildContext context}) {
-    final typography = appThemeData.typography;
-    final colorScheme = appThemeData.colorScheme;
+    final typography = context.theme.typography;
+    final colorScheme = context.theme.colorScheme;
 
     void onPressBackButton(BuildContext context) {
       context.pop();
@@ -55,20 +56,15 @@ class ReportFormViewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = appThemeData.colorScheme;
+    final colorScheme = context.theme.colorScheme;
 
-    // final typography = appThemeData.typography;
+    // final typography = context.theme.typography;
     return BlocBuilder<ReportFormBloc, ReportFormState>(
       builder: (context, state) {
         if (state is ReportFormStateLoading) {
           return Scaffold(
             backgroundColor: colorScheme.background,
-            body: Center(
-              child: Align(
-                alignment: Alignment.center,
-                child: CircularProgressIndicator(color: colorScheme.primary),
-              ),
-            ),
+            body: Center(child: LoadingCircleWidget()),
           );
         } else if (state is ReportFormStateReady) {
           return Scaffold(

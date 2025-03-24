@@ -13,5 +13,9 @@ String generateRandomString(int count) {
 }
 
 int random100() {
-  return Random().nextInt(201) - 100; // 1 to 100
+  return Random().nextInt(201) - 100; // -100 to 100
+}
+
+int random100u() {
+  return Random().nextInt(100);
 }

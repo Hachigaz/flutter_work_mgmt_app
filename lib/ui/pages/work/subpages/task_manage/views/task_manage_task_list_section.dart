@@ -11,8 +11,8 @@ class _TaskListDisplayItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final typography = appThemeData.typography;
-    final colorScheme = appThemeData.colorScheme;
+    final typography = context.theme.typography;
+    final colorScheme = context.theme.colorScheme;
     return GestureDetector(
       onTap: () => {onTapTaskItem(context: context)},
       child: Container(
@@ -46,7 +46,7 @@ class _TaskListDisplayItem extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: padding_sm),
                 child: Text(
-                  "Trạng thái: ${"đang hoạt động"}",
+                  "Trạng thái: ${"Đang hoạt động"}",
                   style: typography.base,
                 ),
               ),
@@ -80,8 +80,8 @@ class _WorkItemTaskListViewSection extends StatelessWidget {
   const _WorkItemTaskListViewSection({required this.scrollController});
   @override
   Widget build(BuildContext context) {
-    final typography = appThemeData.typography;
-    final colorScheme = appThemeData.colorScheme;
+    // final typography = context.theme.typography;
+    // final colorScheme = context.theme.colorScheme;
     // return Padding(
     //   padding: EdgeInsets.symmetric(vertical: padding_lg),
     //   child: BlocBuilder<WorkItemDetailBloc, WorkItemDetailState>(

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_work_mgmt_app/commons/misc/random.dart';
 import 'package:flutter_work_mgmt_app/commons/models/project.dart';
 
 part "task_manage_event.dart";

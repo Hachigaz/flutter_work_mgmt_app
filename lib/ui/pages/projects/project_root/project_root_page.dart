@@ -3,13 +3,13 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/theme_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_list_section.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/swipable_list_view.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/input_style_presets.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/projects/bloc/project_root_repository.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/projects/project_root/components/project_display_item.dart';
+import 'package:forui/forui.dart';
 
 // class _ProjectRootPageHeader extends StatelessWidget {
 //   const _ProjectRootPageHeader();
@@ -25,8 +25,8 @@ import 'package:flutter_work_mgmt_app/ui/pages/projects/project_root/components/
 class _PageTitleDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final typography = appThemeData.typography;
-    final colorScheme = appThemeData.colorScheme;
+    final typography = context.theme.typography;
+    final colorScheme = context.theme.colorScheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,9 +57,10 @@ class _ProjectRootPageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final typography = appThemeData.typography;
-    // final colorScheme = appThemeData.colorScheme;
+    final typography = context.theme.typography;
+    // final colorScheme = context.theme.colorScheme;
     final projRepo = context.read<ProjectRootRepository>();
+    final presets = context.read<ThemeBloc>().state.presets;
 
     return Padding(
       padding: EdgeInsets.only(
@@ -112,7 +113,7 @@ class _ProjectRootPageContent extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {},
-                    style: button_style_default,
+                    style: presets.button_style_default,
                     child: Text("Xem tất cả", style: typography.sm),
                   ),
                 ],
@@ -143,7 +144,7 @@ class _ProjectRootPageContent extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {},
-                    style: button_style_default,
+                    style: presets.button_style_default,
                     child: Text("Xem tất cả", style: typography.sm),
                   ),
                 ],
@@ -173,7 +174,7 @@ class ProjectRootPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: appThemeData.colorScheme.background,
+      color: context.theme.colorScheme.background,
       child: _ProjectRootPageContent(),
     );
   }

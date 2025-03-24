@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/loading_widgets/loading_circle_widget.dart';
 import 'package:formz/formz.dart';
+import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/input_style_presets.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/login/components/login_box/bloc/login_bloc.dart';
 
 class LoginUsernameTextField extends StatelessWidget {
@@ -11,17 +12,18 @@ class LoginUsernameTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = appThemeData.colorScheme;
-    final typography = appThemeData.typography;
+    final colorScheme = context.theme.colorScheme;
+    final typography = context.theme.typography;
     final displayError = context.select(
       (LoginBloc bloc) => bloc.state.username.displayError,
     );
+    final presets = context.read<ThemeBloc>().state.presets;
     return TextField(
       style: typography.base,
       cursorColor: colorScheme.primary,
       cursorErrorColor: colorScheme.error,
       keyboardType: TextInputType.text,
-      decoration: input_dec_bordered.copyWith(
+      decoration: presets.input_dec_bordered.copyWith(
         label: const Text("Tên đăng nhập"),
         hintText: "Tên đăng nhập",
         errorText: displayError?.message,
@@ -39,18 +41,19 @@ class LoginPasswordTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = appThemeData.colorScheme;
-    final typography = appThemeData.typography;
+    final colorScheme = context.theme.colorScheme;
+    final typography = context.theme.typography;
     final displayError = context.select(
       (LoginBloc bloc) => bloc.state.password.displayError,
     );
+    final presets = context.read<ThemeBloc>().state.presets;
     return TextField(
       style: typography.base,
       cursorColor: colorScheme.primary,
       cursorErrorColor: colorScheme.error,
       keyboardType: TextInputType.text,
       obscureText: true,
-      decoration: input_dec_bordered.copyWith(
+      decoration: presets.input_dec_bordered.copyWith(
         label: const Text('Mật khẩu'),
         hintText: "Mật khẩu",
         errorText: displayError?.message,
@@ -68,34 +71,24 @@ class LoginSubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = appThemeData.colorScheme;
-    final status = context.select((LoginBloc bloc) {
-      final status = bloc.state.status;
-      return status;
-    });
+    // final colorScheme = context.theme.colorScheme;
+    final presets = context.read<ThemeBloc>().state.presets;
 
-    if (status.isInProgress) {
-      return SizedBox(
-        child: Align(
-          alignment: Alignment.center,
-          child: CircularProgressIndicator(color: colorScheme.primary),
-        ),
-      );
-    }
-
+    final loginBloc = context.watch<LoginBloc>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (context.read<LoginBloc>().state.status.isSuccess) {
         context.pushNamed("home");
       }
     });
 
-    return ElevatedButton(
-      style: button_style_primary,
-      onPressed: () {
-        final loginBloc = context.read<LoginBloc>();
-        loginBloc.state.isValid ? loginBloc.add(const LoginSubmitted()) : null;
-      },
-      child: const Text("Đăng nhập"),
-    );
+    return loginBloc.state.status.isInProgress
+        ? LoadingCircleWidget()
+        : ElevatedButton(
+          style: presets.button_style_primary,
+          onPressed: () {
+            context.read<LoginBloc>().add(const LoginSubmitted());
+          },
+          child: const Text("Đăng nhập"),
+        );
   }
 }

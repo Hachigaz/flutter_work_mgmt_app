@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/color/color_helpers.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/helpers/color_helpers.dart';
 
 const _mainNavBarItems = [
   (routeName: "home", icon: Icons.warehouse, label: "Trang chủ"),
@@ -23,8 +23,8 @@ class _MainAppNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = appThemeData.colorScheme;
-    final typography = appThemeData.typography;
+    final colorScheme = context.theme.colorScheme;
+    final typography = context.theme.typography;
 
     final selectedItemColor = colorScheme.secondaryForeground;
     final unselectedItemColor = colorShift(

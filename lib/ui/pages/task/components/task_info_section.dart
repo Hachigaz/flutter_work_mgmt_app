@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/description_display_widget.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/loading_widgets/loading_circle_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_list_section.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/task/bloc/task_detail_bloc.dart';
+import 'package:forui/forui.dart';
 
 class TaskInfoSection extends StatelessWidget {
   const TaskInfoSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final typography = appThemeData.typography;
-    final colorScheme = appThemeData.colorScheme;
+    final typography = context.theme.typography;
+    // final colorScheme = context.theme.colorScheme;
     return PageListSection(
       label: Text(
         "Thông tin công việc",
@@ -60,10 +61,7 @@ class TaskInfoSection extends StatelessWidget {
                 ],
               );
             } else {
-              return Align(
-                alignment: Alignment.center,
-                child: CircularProgressIndicator(color: colorScheme.primary),
-              );
+              return LoadingCircleWidget();
             }
           },
           buildWhen: (previous, current) {
@@ -79,8 +77,8 @@ class TaskInfoDescriptionSection extends StatelessWidget {
   const TaskInfoDescriptionSection({super.key});
   @override
   Widget build(BuildContext context) {
-    final typography = appThemeData.typography;
-    final colorScheme = appThemeData.colorScheme;
+    final typography = context.theme.typography;
+    // final colorScheme = context.theme.colorScheme;
     return PageListSection(
       label: Text(
         "Mô tả",
@@ -98,10 +96,7 @@ class TaskInfoDescriptionSection extends StatelessWidget {
               ),
             );
           } else {
-            return Align(
-              alignment: Alignment.center,
-              child: CircularProgressIndicator(color: colorScheme.primary),
-            );
+            return LoadingCircleWidget();
           }
         },
         buildWhen: (previous, current) {

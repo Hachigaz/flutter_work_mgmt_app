@@ -1,6 +1,6 @@
 import 'package:flutter_work_mgmt_app/commons/misc/random.dart';
 import 'package:flutter_work_mgmt_app/commons/models/project.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/data_repository.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/data_repositories/data_repository.dart';
 
 class TaskRepository extends DataRepository<TaskRecord> {
   @override

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/theme_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/task/components/task_info_section.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/task/components/task_report_info_section/task_report_info_section.dart';
+import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/color_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
 
 class _TaskDetailPageContent extends StatelessWidget {
   const _TaskDetailPageContent();
@@ -45,11 +46,12 @@ class TaskDetailPage extends StatelessWidget {
   }
 
   AppBar _TaskDetailPageHeader(BuildContext context) {
-    final typography = appThemeData.typography;
-    // final colorScheme = appThemeData.colorScheme;
+    final typography = context.theme.typography;
+    // final colorScheme = context.theme.colorScheme;
+    final presets = context.read<ThemeBloc>().state.presets;
 
     return AppBar(
-      backgroundColor: color_background_primary,
+      backgroundColor: presets.color_background_primary,
       centerTitle: true,
       title: Text(
         "Chi tiết công việc",
@@ -67,7 +69,7 @@ class TaskDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = appThemeData.colorScheme;
+    final colorScheme = context.theme.colorScheme;
     return Scaffold(
       backgroundColor: colorScheme.background,
       appBar: _TaskDetailPageHeader(context),

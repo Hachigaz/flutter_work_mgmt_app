@@ -2,9 +2,10 @@ import 'dart:core';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/auth_repo.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/login/components/login_box/model/password.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/login/components/login_box/model/username.dart';
 import 'package:formz/formz.dart';
-import 'package:validators/validators.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/app_providers/auth_repo.dart';
 
 part "login_event.dart";
 part "login_state.dart";
@@ -19,14 +20,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginSubmitted>(_onSubmitted);
   }
 
+  bool _validate() {
+    return Formz.validate([state.username, state.password]);
+  }
+
   void _onUsernameChanged(
     LoginUsernameChanged event,
     Emitter<LoginState> emit,
   ) {
     final username = UsernameInput.dirty(event.username);
-    emit(
-      state.copyWith(username: username, isValid: Formz.validate([username])),
-    );
+    emit(state.copyWith(username: username, isValid: _validate()));
   }
 
   void _onPasswordChanged(
@@ -34,13 +37,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) {
     final password = PasswordInput.dirty(event.password);
-    emit(
-      state.copyWith(password: password, isValid: Formz.validate([password])),
-    );
+    emit(state.copyWith(password: password, isValid: _validate()));
   }
 
   void _onSubmitted(LoginSubmitted event, Emitter<LoginState> emit) async {
-    if (state.isValid) {
+    final isValid = _validate();
+    if (isValid) {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
       try {
         final result = await _authRepository.login(
@@ -55,6 +57,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       } catch (_) {
         emit(state.copyWith(status: FormzSubmissionStatus.failure));
       }
+    } else {
+      emit(
+        state.copyWith(
+          isValid: isValid,
+          username: UsernameInput.dirty(state.username.value),
+          password: PasswordInput.dirty(state.password.value),
+        ),
+      );
     }
   }
 }

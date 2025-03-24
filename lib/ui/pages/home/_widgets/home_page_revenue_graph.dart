@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_list_section.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/color/color_helpers.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/helpers/color_helpers.dart';
+import 'package:forui/forui.dart';
 
 class __HomePageRevenueGraphItemItem extends StatelessWidget {
   final String _label;
@@ -23,8 +23,8 @@ class __HomePageRevenueGraphItemItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final typography = appThemeData.typography;
-    final colorScheme = appThemeData.colorScheme;
+    final typography = context.theme.typography;
+    final colorScheme = context.theme.colorScheme;
 
     return Flexible(
       child: Column(
@@ -81,8 +81,8 @@ class _HomePageRevenueGraphItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final typography = appThemeData.typography;
-    final colorScheme = appThemeData.colorScheme;
+    final typography = context.theme.typography;
+    final colorScheme = context.theme.colorScheme;
     return PageListSection(
       label: Row(
         children: [
@@ -159,7 +159,7 @@ class HomePageRevenueGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = appThemeData.colorScheme;
+    final colorScheme = context.theme.colorScheme;
     return DecoratedBox(
       decoration: BoxDecoration(
         border: Border.all(color: colorScheme.foreground.withAlpha(80)),

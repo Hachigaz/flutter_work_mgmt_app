@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_list_section.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
+import 'package:forui/forui.dart';
 
 class _HomePageToolbarIcon extends StatelessWidget {
   final IconData _icon;
@@ -19,8 +19,8 @@ class _HomePageToolbarIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = appThemeData.colorScheme;
-    final typography = appThemeData.typography;
+    final colorScheme = context.theme.colorScheme;
+    final typography = context.theme.typography;
 
     return Column(
       children: [

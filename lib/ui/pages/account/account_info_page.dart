@@ -3,15 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_color/flutter_color.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/auth_repo.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/account/_widgets/account_detail_widget.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/account/_widgets/option_menu_widget.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/account/_widgets/staff_detail_widget.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/account/_widgets/top_avatar_display.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_work_mgmt_app/commons/models/account.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/app_providers/auth_repo.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/color/color_helpers.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/date_formats.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/input_style_presets.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/account/bloc/account_info_page_repository.dart';
 
 final double _background_y_offset = -420.r;
@@ -29,13 +30,10 @@ class _AccountInfoPageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = appThemeData.colorScheme;
-    final typography = appThemeData.typography;
+    final colorScheme = context.theme.colorScheme;
+    final typography = context.theme.typography;
 
-    final accountRecord =
-        context.read<AccountInfoPageRepository>().accountRecord;
-    final staffRecord = context.read<AccountInfoPageRepository>().staffRecord;
-
+    final presets = context.read<ThemeBloc>().state.presets;
     return Stack(
       children: [
         Align(
@@ -52,7 +50,9 @@ class _AccountInfoPageContent extends StatelessWidget {
                     height: 400.r,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        color: appThemeData.colorScheme.primary.withAlpha(120),
+                        color: context.theme.colorScheme.primary
+                            .darker(20)
+                            .withAlpha(120),
                       ),
                     ),
                   ),
@@ -78,121 +78,25 @@ class _AccountInfoPageContent extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                      top: 35.h,
-                      left: 10.w,
-                      right: 10.w,
-                      bottom: 10.h,
+                      top: 35,
+                      left: 10,
+                      right: 10,
+                      bottom: 10,
                     ),
-                    child: Row(
-                      children: [
-                        ClipOval(
-                          child: Image.asset(
-                            "assets/images/cover.jpg",
-                            width: 100.r,
-                            height: 100.r,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 30.r, left: 10.w),
-                          child: Text(
-                            staffRecord.fullName!,
-                            style: appThemeData.typography.xl2.copyWith(
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    child: TopAvatarDisplay(),
                   ),
                   Column(
                     children: [
-                      ExpansionTile(
-                        backgroundColor: colorScheme.background,
-                        collapsedBackgroundColor: colorScheme.background,
-                        textColor: colorShift(
-                          color: colorScheme.foreground,
-                          r: 10,
-                          g: 10,
-                          b: 10,
-                        ),
-                        collapsedTextColor: colorScheme.foreground,
-                        title: Text(
-                          style: typography.base.copyWith(
-                            fontWeight: FontWeight.w600,
-                          ),
-                          "Thông tin cá nhân",
-                        ),
-                        children: [
-                          ListTile(
-                            title: Text(
-                              style: typography.base.copyWith(),
-                              "Họ và tên: ${staffRecord.fullName}",
-                            ),
-                          ),
-                          ListTile(
-                            title: Text(
-                              style: typography.base.copyWith(),
-                              "Ngày sinh: ${date_fmat_date.format(staffRecord.dob!)}",
-                            ),
-                          ),
-                          ListTile(
-                            title: Text(
-                              style: typography.base.copyWith(),
-                              "Giới tính: ${staffRecord.gender!.label}",
-                            ),
-                          ),
-                          ListTile(
-                            title: Text(
-                              style: typography.base.copyWith(),
-                              "Ngày bắt đầu làm việc:  ${date_fmat_date.format(staffRecord.dateEmployed!)}",
-                            ),
-                          ),
-                        ],
-                      ),
-                      ExpansionTile(
-                        backgroundColor: colorScheme.background,
-                        collapsedBackgroundColor: colorScheme.background,
-                        textColor: colorShift(
-                          color: colorScheme.foreground,
-                          r: 10,
-                          g: 10,
-                          b: 10,
-                        ),
-                        collapsedTextColor: colorScheme.foreground,
-                        title: Text(
-                          style: typography.base.copyWith(
-                            fontWeight: FontWeight.w600,
-                          ),
-                          "Thông tin tài khoản",
-                        ),
-                        children: [
-                          ListTile(
-                            title: Text(
-                              style: typography.base.copyWith(),
-                              "Tên đăng nhập: ${accountRecord.loginName}",
-                            ),
-                          ),
-                          ListTile(
-                            title: Text(
-                              style: typography.base.copyWith(),
-                              "Ngày cuối đăng nhập: ${date_fmat_date.format(accountRecord.lastLogin!)}",
-                            ),
-                          ),
-                          ListTile(
-                            title: Text(
-                              style: typography.base.copyWith(),
-                              "Ngày tạo tài khoản: ${date_fmat_date.format(accountRecord.dateCreated!)}",
-                            ),
-                          ),
-                        ],
-                      ),
+                      StaffDetailWidget(),
+                      AccountDetailWidget(),
+                      OptionMenuWidget(),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
                             onClickLogoutButton(context);
                           },
-                          style: button_style_primary.copyWith(
+                          style: presets.button_style_primary.copyWith(
                             backgroundColor: WidgetStateProperty.all<Color>(
                               colorScheme.primary.darker(30).withAlpha(180),
                             ),
@@ -208,7 +112,7 @@ class _AccountInfoPageContent extends StatelessWidget {
                               "Đăng xuất",
                               style: typography.base.copyWith(
                                 fontWeight: FontWeight.w600,
-                                color: colorScheme.secondaryForeground,
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -231,6 +135,7 @@ class AccountInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = context.theme.colorScheme;
     return Material(
       child: RepositoryProvider<AccountInfoPageRepository>(
         create: (BuildContext context) {
@@ -242,10 +147,9 @@ class AccountInfoPage extends StatelessWidget {
             staffRecord: staffRecord!,
           );
         },
-        child: FScaffold(
-          contentPad: false,
-          style: style_scaffold_root_page,
-          content: _AccountInfoPageContent(),
+        child: Scaffold(
+          backgroundColor: colorScheme.background,
+          body: _AccountInfoPageContent(),
         ),
       ),
     );

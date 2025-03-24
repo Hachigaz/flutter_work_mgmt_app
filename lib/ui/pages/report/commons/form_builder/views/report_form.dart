@@ -4,13 +4,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/theme_bloc.dart';
 import 'package:forui/forui.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/input_fields/image_field.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_list_section.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/input_style_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/report/bloc/report_form_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/report/commons/form_builder/bloc/report_form_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/report/commons/form_builder/models/models.dart';
 
 part "form_section.dart";
@@ -31,8 +30,8 @@ class ReportForm extends StatelessWidget {
     final List<Tab> tabLabels = [];
     final List<Widget> tabs = [];
 
-    final colorScheme = appThemeData.colorScheme;
-    // final typography = appThemeData.typography;
+    final colorScheme = context.theme.colorScheme;
+    // final typography = context.theme.typography;
 
     for (final section in formBloc.formStructure.sections.entries) {
       tabLabels.add(Tab(child: Text(section.value.label)));

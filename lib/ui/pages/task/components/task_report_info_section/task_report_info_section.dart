@@ -4,15 +4,14 @@ import 'package:flutter_color/flutter_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_work_mgmt_app/commons/models/model.dart';
 import 'package:flutter_work_mgmt_app/commons/models/report.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/report_repository.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/theme_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/bloc/list_view_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/list_view_widget.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/loading_widgets/loading_circle_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_list_section.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/search_bar_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/date_formats.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/input_style_presets.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/presets/date_formats.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/task/bloc/task_detail_bloc.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
@@ -27,8 +26,9 @@ class _ReportScheduleListItem extends StatelessWidget {
   const _ReportScheduleListItem({required this.schedule});
   @override
   Widget build(BuildContext context) {
-    final colorScheme = appThemeData.colorScheme;
-    final typography = appThemeData.typography;
+    final colorScheme = context.theme.colorScheme;
+    final typography = context.theme.typography;
+    final presets = context.read<ThemeBloc>().state.presets;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,7 +101,7 @@ class _ReportScheduleListItem extends StatelessWidget {
                   children: [
                     Text(date_fmat_date.format(schedule.dueDate!)),
                     OutlinedButton(
-                      style: button_style_default.copyWith(
+                      style: presets.button_style_default.copyWith(
                         padding: WidgetStateProperty.all(
                           EdgeInsets.symmetric(
                             vertical: 0,
@@ -142,8 +142,9 @@ class _ReportScheduleNotSentListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = appThemeData.colorScheme;
-    final typography = appThemeData.typography;
+    final colorScheme = context.theme.colorScheme;
+    final typography = context.theme.typography;
+    final presets = context.read<ThemeBloc>().state.presets;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8),
@@ -170,7 +171,7 @@ class _ReportScheduleNotSentListItem extends StatelessWidget {
                   onPressed: () {
                     print("chỉnh sửa");
                   },
-                  style: button_style_primary.copyWith(
+                  style: presets.button_style_primary.copyWith(
                     backgroundColor: WidgetStateProperty.all<Color>(
                       colorScheme.primary.lighter(20).withAlpha(200),
                     ),
@@ -213,7 +214,10 @@ class _NotSentReportSection extends StatelessWidget {
         ),
         ListViewWidget<ReportSchedule>(
           listItemBuilder: (item) {
-            return _ReportScheduleNotSentListItem(schedule: item);
+            return Padding(
+              padding: EdgeInsets.symmetric(vertical: 4),
+              child: _ReportScheduleNotSentListItem(schedule: item),
+            );
           },
         ),
       ],
@@ -224,8 +228,8 @@ class _NotSentReportSection extends StatelessWidget {
 class _UpcomingReportSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final colorScheme = appThemeData.colorScheme;
-    // final typography = appThemeData.typography;
+    // final colorScheme = context.theme.colorScheme;
+    // final typography = context.theme.typography;
     return BlocBuilder<TaskDetailBloc, TaskDetailState>(
       builder: (context, state) {
         if (state is TaskDetailStateReady) {
@@ -239,10 +243,7 @@ class _UpcomingReportSection extends StatelessWidget {
             ],
           );
         } else {
-          return Align(
-            alignment: Alignment.center,
-            child: CircularProgressIndicator(color: colorScheme.primary),
-          );
+          return LoadingCircleWidget();
         }
       },
     );
@@ -258,8 +259,10 @@ class TaskReportInfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final typography = appThemeData.typography;
-    final colorScheme = appThemeData.colorScheme;
+    final typography = context.theme.typography;
+    // final colorScheme = context.theme.colorScheme;
+    final presets = context.read<ThemeBloc>().state.presets;
+
     return PageListSection(
       label: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -269,7 +272,7 @@ class TaskReportInfoSection extends StatelessWidget {
             style: typography.xl2.copyWith(fontWeight: FontWeight.w600),
           ),
           OutlinedButton(
-            style: button_style_default,
+            style: presets.button_style_default,
             child: Text("Tạo lịch báo cáo"),
             onPressed: () {
               onClickGenerateReportButton(context);

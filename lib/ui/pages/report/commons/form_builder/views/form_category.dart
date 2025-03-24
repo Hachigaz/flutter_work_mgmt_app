@@ -15,9 +15,10 @@ class _FormCategoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> formInputs = [];
-    final typography = appThemeData.typography;
-    final colorScheme = appThemeData.colorScheme;
+    final typography = context.theme.typography;
+    final colorScheme = context.theme.colorScheme;
     final formBloc = context.read<ReportFormBloc>();
+    final presets = context.read<ThemeBloc>().state.presets;
     formInputs.add(
       Padding(
         padding: EdgeInsets.only(top: padding_xl, bottom: padding_md),
@@ -76,7 +77,7 @@ class _FormCategoryWidget extends StatelessWidget {
                   text: "*",
                   style: typography.base.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: appThemeData.colorScheme.error,
+                    color: context.theme.colorScheme.error,
                   ),
                 ),
             ],
@@ -93,7 +94,9 @@ class _FormCategoryWidget extends StatelessWidget {
               cursorColor: colorScheme.primary,
               cursorErrorColor: colorScheme.error,
               keyboardType: TextInputType.text,
-              decoration: input_dec_bordered.copyWith(label: fieldLabel),
+              decoration: presets.input_dec_bordered.copyWith(
+                label: fieldLabel,
+              ),
               onChanged: (value) {
                 context.read<ReportFormBloc>().add(
                   ReportFormInputChange<String>(
@@ -112,7 +115,9 @@ class _FormCategoryWidget extends StatelessWidget {
               cursorColor: colorScheme.primary,
               cursorErrorColor: colorScheme.error,
               keyboardType: TextInputType.text,
-              decoration: input_dec_bordered.copyWith(label: fieldLabel),
+              decoration: presets.input_dec_bordered.copyWith(
+                label: fieldLabel,
+              ),
               onChanged: (value) {
                 context.read<ReportFormBloc>().add(
                   ReportFormInputChange<String>(
@@ -132,7 +137,9 @@ class _FormCategoryWidget extends StatelessWidget {
               cursorColor: colorScheme.primary,
               cursorErrorColor: colorScheme.error,
               keyboardType: TextInputType.text,
-              decoration: input_dec_bordered.copyWith(label: fieldLabel),
+              decoration: presets.input_dec_bordered.copyWith(
+                label: fieldLabel,
+              ),
               onChanged: (value) {
                 context.read<ReportFormBloc>().add(
                   ReportFormInputChange<String>(

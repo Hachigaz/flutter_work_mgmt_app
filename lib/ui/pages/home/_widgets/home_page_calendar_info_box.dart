@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_list_section.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/color/color_helpers.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/utils/helpers/color_helpers.dart';
+import 'package:forui/forui.dart';
 
 class _HomePageCalendarInfoBox extends StatelessWidget {
   final String _title;
@@ -19,8 +19,8 @@ class _HomePageCalendarInfoBox extends StatelessWidget {
        _boxWidth = boxWidth;
   @override
   Widget build(BuildContext context) {
-    final colorScheme = appThemeData.colorScheme;
-    final typography = appThemeData.typography;
+    final colorScheme = context.theme.colorScheme;
+    final typography = context.theme.typography;
 
     return SizedBox(
       width: _boxWidth,
@@ -66,6 +66,8 @@ class _HomePageCalendarInfoBox extends StatelessWidget {
 }
 
 class HomePageCalendarInfoSection extends StatelessWidget {
+  const HomePageCalendarInfoSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return PageListSection(

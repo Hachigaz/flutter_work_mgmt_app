@@ -13,12 +13,10 @@ class TaskDetailStateReady extends TaskDetailState {
   final TaskRecord taskRecord;
   final List<ReportSchedule>? reportSchedules;
   // final List<ReportRecurringSchedule>? recurringSchedules;
-  final List<TaskReportRecord>? recentReports;
 
   const TaskDetailStateReady({
     required this.taskRecord,
     this.reportSchedules,
     // this.recurringSchedules,
-    this.recentReports,
   });
 }

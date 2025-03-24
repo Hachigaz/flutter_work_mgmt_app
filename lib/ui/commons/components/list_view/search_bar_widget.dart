@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/theme_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/bloc/list_view_bloc.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/input_style_presets.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/loading_widgets/loading_circle_widget.dart';
+import 'package:forui/forui.dart';
 
 class SearchBarWidget<
   ListBloc extends Bloc<ListEvent, ListState>,
@@ -24,8 +25,10 @@ class SearchBarWidget<
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = appThemeData.colorScheme;
-    final typography = appThemeData.typography;
+    final colorScheme = context.theme.colorScheme;
+    final typography = context.theme.typography;
+    final presets = context.read<ThemeBloc>().state.presets;
+
     return BlocBuilder<ListBloc, ListState>(
       builder: (context, state) {
         return Row(
@@ -38,7 +41,7 @@ class SearchBarWidget<
                 cursorColor: colorScheme.primary,
                 cursorErrorColor: colorScheme.error,
                 keyboardType: TextInputType.text,
-                decoration: input_dec_bordered.copyWith(
+                decoration: presets.input_dec_bordered.copyWith(
                   hintText: hintText,
                   prefixIcon: Icon(
                     Icons.search,
@@ -55,8 +58,7 @@ class SearchBarWidget<
               ),
             ),
             const SizedBox(width: 10),
-            if (state is LoadingState)
-              CircularProgressIndicator(color: colorScheme.secondaryForeground),
+            if (state is LoadingState) LoadingCircleWidget(),
           ],
         );
       },

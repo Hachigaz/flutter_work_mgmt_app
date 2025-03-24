@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/loading_widgets/loading_text_display_widget.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/page_detail/page_detail_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/projects/subpages/project_detail/bloc/project_detail_bloc.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_work_mgmt_app/commons/models/model.dart';
 import 'package:flutter_work_mgmt_app/commons/models/project.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/color_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/projects/subpages/project_detail/bloc/project_detail_repo.dart';
 
 class _WorkItemListDisplayItem extends StatelessWidget {
   final WorkItemRecord _workItemRecord;
@@ -21,8 +22,8 @@ class _WorkItemListDisplayItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = appThemeData.colorScheme;
-    final typography = appThemeData.typography;
+    final colorScheme = context.theme.colorScheme;
+    final typography = context.theme.typography;
 
     return GestureDetector(
       onTap: () => {onTapWorkItem(context: context, workId: 1)},
@@ -76,33 +77,39 @@ class _WorkItemListDisplayItem extends StatelessWidget {
 class _ProjectWorkListPageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final pageRepo = context.read<ProjectDetailPageRepository>();
-    final WorkItemRecord workItemRecord = pageRepo.activeWorkItemRecord;
+    // final colorScheme = context.theme.colorScheme;
+    final typography = context.theme.typography;
 
-    // final colorScheme = appThemeData.colorScheme;
-    // final typography = appThemeData.typography;
-
-    return ListView(
-      padding: EdgeInsets.symmetric(
-        vertical: padding_md,
-        horizontal: padding_md,
-      ),
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: padding_sm),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _WorkItemListDisplayItem(workItemRecord: workItemRecord),
-              _WorkItemListDisplayItem(workItemRecord: workItemRecord),
-              _WorkItemListDisplayItem(workItemRecord: workItemRecord),
-              _WorkItemListDisplayItem(workItemRecord: workItemRecord),
-              _WorkItemListDisplayItem(workItemRecord: workItemRecord),
-              _WorkItemListDisplayItem(workItemRecord: workItemRecord),
-            ],
-          ),
-        ),
-      ],
+    return BlocBuilder<ProjectDetailBloc, PageDetailState>(
+      builder: (context, state) {
+        if (state is ProjectDetailStateRecordReady) {
+          if (state.activeWorkItems.isNotEmpty) {
+            return ListView(
+              padding: EdgeInsets.symmetric(
+                vertical: padding_md,
+                horizontal: padding_md,
+              ),
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: padding_sm),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for (final workItemRecord in state.activeWorkItems)
+                        _WorkItemListDisplayItem(
+                          workItemRecord: workItemRecord,
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          }
+          return Text("Chưa có dữ liệu", style: typography.base);
+        } else {
+          return LoadingTextDisplayWidget();
+        }
+      },
     );
   }
 }
@@ -115,10 +122,12 @@ class ProjectWorkManagePage extends StatelessWidget {
   }
 
   AppBar _ProjectWorkListPageHeader({required BuildContext context}) {
-    final typography = appThemeData.typography;
-    final colorScheme = appThemeData.colorScheme;
+    final typography = context.theme.typography;
+    final colorScheme = context.theme.colorScheme;
+    final presets = context.read<ThemeBloc>().state.presets;
+
     return AppBar(
-      backgroundColor: color_background_primary,
+      backgroundColor: presets.color_background_primary,
       centerTitle: true,
       title: Text(
         "Quản lý hạng mục",
@@ -136,8 +145,10 @@ class ProjectWorkManagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final presets = context.read<ThemeBloc>().state.presets;
+
     return Scaffold(
-      backgroundColor: color_background_1,
+      backgroundColor: presets.color_background_1,
       appBar: _ProjectWorkListPageHeader(context: context),
       body: _ProjectWorkListPageContent(),
     );

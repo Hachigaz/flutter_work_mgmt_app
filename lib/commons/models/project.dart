@@ -6,7 +6,9 @@ class ProjectRecord {
   final String? nameShort;
   final String? description;
   final String? workAddress;
+  final ID? activeWorkItem;
   final int? workItemCount;
+  final int? completedWorkCount;
   final DateTime? startDate;
   final bool? isActive;
 
@@ -16,7 +18,9 @@ class ProjectRecord {
     this.nameShort,
     this.description,
     this.workAddress,
+    this.activeWorkItem,
     this.workItemCount,
+    this.completedWorkCount,
     this.startDate,
     this.isActive,
   });

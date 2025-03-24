@@ -1,33 +1,24 @@
 library;
 
-import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/theme_bloc.dart';
+import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_work_mgmt_app/commons/models/model.dart';
-import 'package:flutter_work_mgmt_app/commons/models/project.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/components/page_list_section.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/components/swipable_list_view.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/color_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/input_style_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/work/bloc/work_item_detail_bloc.dart';
 
-part 'views/work_item_info_section.dart';
-part 'views/work_detail_task_overview_section.dart';
+import "_components/views/work_item_info_section.dart";
+import "_components/views/_task_overview_section/task_overview_section.dart";
 
 class _WorkItemDetailPageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // final typography = appThemeData.typography;
-    final colorScheme = appThemeData.colorScheme;
+    // final typography = context.theme.typography;
+    final colorScheme = context.theme.colorScheme;
+
     return ListView(
       padding: EdgeInsets.all(0),
       children: [
-        _WorkItemInfoSection(),
+        WorkItemInfoSection(),
         Container(
           decoration: BoxDecoration(
             color: colorScheme.background,
@@ -37,7 +28,7 @@ class _WorkItemDetailPageContent extends StatelessWidget {
             ),
           ),
           padding: EdgeInsets.all(30),
-          child: Column(children: [_WorkDetailTaskOverviewSection()]),
+          child: Column(children: [WorkDetailTaskOverviewSection()]),
         ),
       ],
     );
@@ -52,8 +43,8 @@ class WorkItemDetailPage extends StatelessWidget {
   }
 
   AppBar _WorkItemDetailPageHeader(BuildContext context) {
-    final typography = appThemeData.typography;
-    final colorScheme = appThemeData.colorScheme;
+    final typography = context.theme.typography;
+    final colorScheme = context.theme.colorScheme;
     return AppBar(
       backgroundColor: colorScheme.primary.withAlpha(0),
       centerTitle: true,
@@ -73,9 +64,9 @@ class WorkItemDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final colorScheme = context.theme.colorScheme;
+    final presets = context.read<ThemeBloc>().state.presets;
     return Scaffold(
-      backgroundColor: color_background_primary,
+      backgroundColor: presets.color_background_primary,
       appBar: _WorkItemDetailPageHeader(context),
       body: _WorkItemDetailPageContent(),
     );

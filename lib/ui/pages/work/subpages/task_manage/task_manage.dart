@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/task_repository.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/bloc/list_view_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/list_view_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/search_bar_widget.dart';
@@ -9,10 +6,7 @@ import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_work_mgmt_app/commons/models/project.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/date_formats.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/input_style_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/work/subpages/task_manage/bloc/task_manage_bloc.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/presets/date_formats.dart';
 
 part "views/task_manage_task_list_section.dart";
 
@@ -38,8 +32,8 @@ class WorkItemTaskManagePage extends StatelessWidget {
   }
 
   AppBar _WorkItemDetailPageHeader(BuildContext context) {
-    final typography = appThemeData.typography;
-    final colorScheme = appThemeData.colorScheme;
+    final typography = context.theme.typography;
+    final colorScheme = context.theme.colorScheme;
     return AppBar(
       backgroundColor: colorScheme.primary.withAlpha(0),
       centerTitle: true,

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/theme_bloc.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_work_mgmt_app/commons/models/model.dart';
 import 'package:flutter_work_mgmt_app/commons/models/project.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/color_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/date_formats.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/presets/date_formats.dart';
 
 void _onPressDetailButton({
   required BuildContext context,
@@ -109,6 +110,7 @@ class ProjectItemDisplayLarge extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = context.theme.colorScheme;
     final typography = context.theme.typography;
+    final presets = context.read<ThemeBloc>().state.presets;
     return GestureDetector(
       onTap:
           () => _onPressDetailButton(
@@ -117,7 +119,7 @@ class ProjectItemDisplayLarge extends StatelessWidget {
           ),
       child: Container(
         decoration: BoxDecoration(
-          color: color_background_primary,
+          color: presets.color_background_primary,
           borderRadius: BorderRadius.circular(15),
         ),
         padding: EdgeInsets.all(padding_lg),

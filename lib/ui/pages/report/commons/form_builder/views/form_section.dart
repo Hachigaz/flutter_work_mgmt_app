@@ -5,7 +5,7 @@ class _FormSectionWidget extends StatelessWidget {
   const _FormSectionWidget({required FormSection section}) : _section = section;
   @override
   Widget build(BuildContext context) {
-    final typography = appThemeData.typography;
+    final typography = context.theme.typography;
     List<Widget> subsections = [];
 
     for (final subsection in _section.subsections.entries) {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/auth_repo.dart';
 import 'package:forui/forui.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/app_providers/auth_repo.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
+// import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/login/components/login_box/bloc/login_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/login/components/login_box/view/login_box.dart';
 
@@ -14,7 +14,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //perform prelogin
-    final colorScheme = appThemeData.colorScheme;
+    final colorScheme = context.theme.colorScheme;
     return BlocProvider(
       create: (context) => LoginBloc(authRepo: context.read<AuthRepository>()),
       child: Scaffold(

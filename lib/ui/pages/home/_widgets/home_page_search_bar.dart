@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/theme_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/box_shadow_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
+import 'package:forui/forui.dart';
 
 class HomePageSearchBar extends StatelessWidget {
   const HomePageSearchBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final typography = appThemeData.typography;
-    final colorScheme = appThemeData.colorScheme;
+    final typography = context.theme.typography;
+    final colorScheme = context.theme.colorScheme;
+    final presets = context.read<ThemeBloc>().state.presets;
     return DecoratedBox(
       decoration: BoxDecoration(
         color: colorScheme.background,
         borderRadius: BorderRadius.circular(15),
-        boxShadow: [style_box_shadow_default_small],
+        boxShadow: [presets.style_box_shadow_default_small],
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: padding_md),

@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/theme_bloc.dart';
+import 'package:forui/forui.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/input_style_presets.dart';
 
 class ImagePickerField extends StatefulWidget {
   final Widget? label;
@@ -62,6 +63,7 @@ class _ImageFieldState extends State<ImagePickerField> {
 
   @override
   Widget build(BuildContext context) {
+    final presets = context.read<ThemeBloc>().state.presets;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -76,12 +78,12 @@ class _ImageFieldState extends State<ImagePickerField> {
             spacing: 10,
             children: [
               OutlinedButton(
-                style: button_style_default,
+                style: presets.button_style_default,
                 onPressed: _onPressPickImage,
                 child: Text("Ảnh từ thư viện"),
               ),
               OutlinedButton(
-                style: button_style_default,
+                style: presets.button_style_default,
                 onPressed: _onPressCamera,
                 child: Text("Camera"),
               ),
@@ -102,8 +104,8 @@ class _ImageFieldState extends State<ImagePickerField> {
           Padding(
             padding: EdgeInsets.symmetric(vertical: padding_md),
             child: Text(
-              style: appThemeData.typography.sm.copyWith(
-                color: appThemeData.colorScheme.error,
+              style: context.theme.typography.sm.copyWith(
+                color: context.theme.colorScheme.error,
                 fontWeight: FontWeight.w600,
               ),
               widget.state!.errorText!,

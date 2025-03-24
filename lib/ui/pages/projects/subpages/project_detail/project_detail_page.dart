@@ -4,19 +4,21 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_work_mgmt_app/commons/models/project.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/description_display_widget.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/loading_widgets/loading_circle_widget.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/loading_widgets/loading_text_display_widget.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/page_detail/page_detail_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/projects/subpages/project_detail/bloc/project_detail_bloc.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_work_mgmt_app/commons/models/model.dart';
 
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_list_section.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/color_presets.dart';
-
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
 
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/date_formats.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/input_style_presets.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/projects/subpages/project_detail/bloc/project_detail_repo.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/presets/date_formats.dart';
 
 part "views/project_detail_info_section.dart";
 part "views/project_detail_work_overview_section.dart";
@@ -26,15 +28,17 @@ part "views/project_detail_contract_overview_section.dart";
 class _ProjectDetailPageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // final typography = appThemeData.typography;
-    // final colorScheme = appThemeData.colorScheme;
+    // final typography = context.theme.typography;
+    // final colorScheme = context.theme.colorScheme;
+    final presets = context.read<ThemeBloc>().state.presets;
+
     return ListView(
       padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
       children: [
         Container(
           padding: EdgeInsets.only(bottom: 10),
           decoration: BoxDecoration(
-            color: color_background_primary,
+            color: presets.color_background_primary,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(12),
               bottomRight: Radius.circular(12),
@@ -120,11 +124,12 @@ class ProjectDetailPage extends StatelessWidget {
   }
 
   AppBar _ProjectDetailPageHeader(BuildContext context) {
-    final typography = appThemeData.typography;
-    // final colorScheme = appThemeData.colorScheme;
+    final typography = context.theme.typography;
+    // final colorScheme = context.theme.colorScheme;
+    final presets = context.read<ThemeBloc>().state.presets;
 
     return AppBar(
-      backgroundColor: color_background_primary,
+      backgroundColor: presets.color_background_primary,
       centerTitle: true,
       title: Text(
         "Chi tiết dự án",

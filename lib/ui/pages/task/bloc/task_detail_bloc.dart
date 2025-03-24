@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_work_mgmt_app/commons/models/model.dart';
 import 'package:flutter_work_mgmt_app/commons/models/project.dart';
 import 'package:flutter_work_mgmt_app/commons/models/report.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/report_schedule_repository.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/task_repository.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/data_repositories/report_schedule_repository.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/data_repositories/task_repository.dart';
 
 part "task_detail_event.dart";
 part "task_detail_state.dart";

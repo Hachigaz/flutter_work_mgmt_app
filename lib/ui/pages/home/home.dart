@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/scrolling_background.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';
+import 'package:forui/forui.dart';
 import '_widgets/widgets.dart';
 
 class _HomePageContent extends StatelessWidget {
@@ -50,7 +50,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = appThemeData.colorScheme;
+    final colorScheme = context.theme.colorScheme;
     return Scaffold(
       backgroundColor: colorScheme.background,
       body: _HomePageContent(),

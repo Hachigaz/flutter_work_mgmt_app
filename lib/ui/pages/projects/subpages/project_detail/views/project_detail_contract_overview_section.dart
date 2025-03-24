@@ -5,10 +5,9 @@ class _ProjectDetailContractOverviewSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final typography = appThemeData.typography;
-    // final colorScheme = appThemeData.colorScheme;
-    final pageRepo = context.read<ProjectDetailPageRepository>();
-    final workRecord = pageRepo.activeWorkItemRecord;
+    final typography = context.theme.typography;
+    // final colorScheme = context.theme.colorScheme;
+    final presets = context.read<ThemeBloc>().state.presets;
 
     return PageListSection(
       label: Row(
@@ -20,7 +19,7 @@ class _ProjectDetailContractOverviewSection extends StatelessWidget {
             style: typography.lg.copyWith(fontWeight: FontWeight.w600),
           ),
           ElevatedButton(
-            style: button_style_default,
+            style: presets.button_style_default,
             onPressed: () => {onPressCreateContractButton(context)},
             child: Icon(Icons.add),
           ),

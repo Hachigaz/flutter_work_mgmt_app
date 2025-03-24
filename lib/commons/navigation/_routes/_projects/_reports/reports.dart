@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_work_mgmt_app/commons/models/model.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/report/bloc/report_form_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/report/commons/form_builder/bloc/report_form_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/report/commons/form_builder/models/models.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/report/report_form_view_page.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/report/report_form/report_form_view_page.dart';
 import 'package:go_router/go_router.dart';
 
 final reportRoute = GoRoute(
