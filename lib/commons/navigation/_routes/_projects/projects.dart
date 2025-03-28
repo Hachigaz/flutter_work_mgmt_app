@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_work_mgmt_app/commons/models/model.dart';
+import 'package:flutter_work_mgmt_app/commons/models/project.dart';
 import 'package:flutter_work_mgmt_app/commons/navigation/_routes/_projects/_contracts/contracts.dart';
 import 'package:flutter_work_mgmt_app/commons/navigation/_routes/_projects/_reports/reports.dart';
 import 'package:flutter_work_mgmt_app/commons/navigation/_routes/_projects/_tasks/tasks.dart';
 import 'package:flutter_work_mgmt_app/commons/navigation/_routes/_projects/_works/works.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/data_repositories/project_repository.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/data_repositories/work_item_repository.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/data_repositories/data_repository.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/projects/subpages/project_detail/bloc/project_detail_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/projects/subpages/project_detail/project_detail_page.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/projects/subpages/project_detail/subpages/work_manage/project_work_manage_page.dart';
@@ -33,8 +33,9 @@ final projectRoutes = <RouteBase>[
               create:
                   (context) => ProjectDetailBloc(
                     recordId: projectId,
-                    dataRepo: context.read<ProjectRepository>(),
-                    workItemRepo: context.read<WorkItemRepository>(),
+                    dataRepo: context.read<DataRepository<ProjectRecord>>(),
+                    workItemRepo:
+                        context.read<DataRepository<WorkItemRecord>>(),
                   ),
               child: child,
             ),

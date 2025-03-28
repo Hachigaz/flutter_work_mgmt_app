@@ -1,7 +1,6 @@
 import 'package:flutter_work_mgmt_app/commons/models/model.dart';
 
-class ProjectRecord {
-  final ID? id;
+class ProjectRecord extends DataRecord {
   final String? name;
   final String? nameShort;
   final String? description;
@@ -13,7 +12,7 @@ class ProjectRecord {
   final bool? isActive;
 
   const ProjectRecord({
-    this.id,
+    super.id,
     this.name,
     this.nameShort,
     this.description,
@@ -26,12 +25,14 @@ class ProjectRecord {
   });
 }
 
-class WorkItemRecord {
-  final ID? id;
+class WorkItemRecord extends DataRecord {
   final ID? projectId;
   final String? name;
   final String? nameShort;
   final String? description;
+  final int? activeTaskCount;
+  final int? completedTaskCount;
+  final int? expiredTaskCount;
   final int? taskCount;
   final double? progression;
   final DateTime? startDate;
@@ -39,11 +40,14 @@ class WorkItemRecord {
   final bool? isActive;
 
   const WorkItemRecord({
-    this.id,
+    super.id,
     this.projectId,
     this.name,
     this.nameShort,
     this.description,
+    this.activeTaskCount,
+    this.completedTaskCount,
+    this.expiredTaskCount,
     this.taskCount,
     this.progression,
     this.startDate,
@@ -68,8 +72,7 @@ enum TaskStatus {
 //   const TaskType({required this.label});
 // }
 
-class TaskRecord {
-  final ID? id;
+class TaskRecord extends DataRecord {
   final ID? workId;
   final String? name;
   final String? nameShort;
@@ -81,7 +84,7 @@ class TaskRecord {
   final bool? isActive;
 
   const TaskRecord({
-    this.id,
+    super.id,
     this.workId,
     this.name,
     this.nameShort,

@@ -51,6 +51,8 @@ dependencies:
   validators: ^3.0.0
   fl_chart: ^0.70.2
   flutter_color: ^2.1.0
+  bloc: ^9.0.0
+  shared_preferences: ^2.5.2
 
 dev_dependencies:
   flutter_test:

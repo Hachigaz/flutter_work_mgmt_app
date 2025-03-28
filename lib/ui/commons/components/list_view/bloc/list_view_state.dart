@@ -1,6 +1,6 @@
 part of "list_view_bloc.dart";
 
-class ListViewState<T> extends Equatable {
+class ListViewState<T extends DataRecord> extends Equatable {
   final List<T> itemList;
   final String currentSearchValue;
   final bool isLast;
@@ -27,7 +27,7 @@ class ListViewState<T> extends Equatable {
   }
 }
 
-class ListViewStateLoading<T> extends ListViewState<T> {
+class ListViewStateLoading<T extends DataRecord> extends ListViewState<T> {
   const ListViewStateLoading({
     required super.itemList,
     required super.currentSearchValue,
@@ -35,7 +35,7 @@ class ListViewStateLoading<T> extends ListViewState<T> {
   });
 }
 
-class ListViewStateReady<T> extends ListViewState<T> {
+class ListViewStateReady<T extends DataRecord> extends ListViewState<T> {
   const ListViewStateReady({
     required super.itemList,
     required super.currentSearchValue,

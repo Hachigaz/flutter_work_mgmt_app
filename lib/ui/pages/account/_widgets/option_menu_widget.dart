@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_color/flutter_color.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/ui/blocs/theme/theme_bloc.dart';
 import 'package:forui/forui.dart';
 
 class OptionMenuWidget extends StatelessWidget {
@@ -23,46 +23,11 @@ class _ThemeSelectListMenuWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _ThemeSelectItemWidget(
-          displayColor: Colors.red,
-          themeName: "Red",
-          themeSet: FThemes.red,
-        ),
-        _ThemeSelectItemWidget(
-          displayColor: Colors.green,
-          themeName: "Green",
-          themeSet: FThemes.green,
-        ),
-        _ThemeSelectItemWidget(
-          displayColor: Colors.orange,
-          themeName: "Orange",
-          themeSet: FThemes.orange,
-        ),
-        _ThemeSelectItemWidget(
-          displayColor: Colors.redAccent,
-          themeName: "Rose",
-          themeSet: FThemes.rose,
-        ),
-        _ThemeSelectItemWidget(
-          displayColor: Colors.blueGrey,
-          themeName: "Slate",
-          themeSet: FThemes.slate,
-        ),
-        _ThemeSelectItemWidget(
-          displayColor: Colors.purpleAccent,
-          themeName: "Violet",
-          themeSet: FThemes.violet,
-        ),
-        _ThemeSelectItemWidget(
-          displayColor: Colors.yellowAccent,
-          themeName: "Yellow",
-          themeSet: FThemes.yellow,
-        ),
-        _ThemeSelectItemWidget(
-          displayColor: Colors.grey,
-          themeName: "Zinc",
-          themeSet: FThemes.zinc,
-        ),
+        for (final theme in ThemeBloc.appThemes.entries)
+          _ThemeSelectItemWidget(
+            displayColor: theme.value.$2,
+            themeName: theme.key,
+          ),
       ],
     );
   }
@@ -71,18 +36,16 @@ class _ThemeSelectListMenuWidget extends StatelessWidget {
 class _ThemeSelectItemWidget extends StatelessWidget {
   void onClickChangeTheme({required BuildContext context}) {
     context.read<ThemeBloc>().add(
-      ThemeEventChangeTheme(context: context, themeSet: themeSet),
+      ThemeEventChangeTheme(context: context, themeName: themeName),
     );
   }
 
   final Color displayColor;
   final String themeName;
-  final ThemeSet themeSet;
 
   const _ThemeSelectItemWidget({
     required this.displayColor,
     required this.themeName,
-    required this.themeSet,
   });
   @override
   Widget build(BuildContext context) {
@@ -111,11 +74,11 @@ class _ThemeSelectItemWidget extends StatelessWidget {
 class _ThemeModeMenuButtonWidget extends StatelessWidget {
   void onClickChangeThemeMode({
     required BuildContext context,
-    required bool isModeLight,
+    required bool appThemeMode,
   }) {
     final themeBloc = context.read<ThemeBloc>();
     themeBloc.add(
-      ThemeEventChangeMode(context: context, isModeLight: isModeLight),
+      ThemeEventChangeMode(context: context, appThemeMode: appThemeMode),
     );
   }
 
@@ -123,7 +86,7 @@ class _ThemeModeMenuButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = context.theme.colorScheme;
     final typography = context.theme.typography;
-    final isModeLight = context.read<ThemeBloc>().state.isModeLight;
+    final appThemeMode = context.read<ThemeBloc>().state.appThemeMode;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -137,29 +100,29 @@ class _ThemeModeMenuButtonWidget extends StatelessWidget {
             Text(
               "Sáng",
               style: typography.base.copyWith(
-                fontWeight: isModeLight ? FontWeight.w700 : FontWeight.w600,
+                fontWeight: appThemeMode ? FontWeight.w700 : FontWeight.w600,
                 color:
-                    isModeLight
+                    appThemeMode
                         ? colorScheme.foreground
                         : colorScheme.mutedForeground,
               ),
             ),
             Switch.adaptive(
               activeColor: colorScheme.background.lighter(40),
-              value: !isModeLight,
+              value: !appThemeMode,
               onChanged: (changedValue) {
                 onClickChangeThemeMode(
                   context: context,
-                  isModeLight: !isModeLight,
+                  appThemeMode: !appThemeMode,
                 );
               },
             ),
             Text(
               "Tối",
               style: typography.base.copyWith(
-                fontWeight: isModeLight ? FontWeight.w600 : FontWeight.w700,
+                fontWeight: appThemeMode ? FontWeight.w600 : FontWeight.w700,
                 color:
-                    isModeLight
+                    appThemeMode
                         ? colorScheme.mutedForeground
                         : colorScheme.foreground,
               ),

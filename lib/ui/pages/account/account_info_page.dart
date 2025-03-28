@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_color/flutter_color.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/auth_repo.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/auth/auth_repo.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/ui/blocs/theme/theme_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/account/_widgets/account_detail_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/account/_widgets/option_menu_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/account/_widgets/staff_detail_widget.dart';
@@ -96,7 +96,7 @@ class _AccountInfoPageContent extends StatelessWidget {
                           onPressed: () {
                             onClickLogoutButton(context);
                           },
-                          style: presets.button_style_primary.copyWith(
+                          style: presets.button_style_primary_rounded.copyWith(
                             backgroundColor: WidgetStateProperty.all<Color>(
                               colorScheme.primary.darker(30).withAlpha(180),
                             ),

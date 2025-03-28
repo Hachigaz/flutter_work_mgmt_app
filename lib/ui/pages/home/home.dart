@@ -33,6 +33,7 @@ class _HomePageContent extends StatelessWidget {
 
             SizedBox(height: padding_4xl),
             SizedBox(height: sectionPadding),
+            HomePageToolbar(),
 
             HomePageCalendarInfoSection(),
             SizedBox(height: sectionPadding),

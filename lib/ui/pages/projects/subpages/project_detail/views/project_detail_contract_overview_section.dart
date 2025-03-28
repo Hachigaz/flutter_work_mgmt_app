@@ -1,7 +1,12 @@
 part of "../project_detail_page.dart";
 
 class _ProjectDetailContractOverviewSection extends StatelessWidget {
-  void onPressCreateContractButton(BuildContext context) {}
+  void onPressCreateContractButton({
+    required BuildContext context,
+    required ID projectId,
+  }) {
+    context.push("${context.namedLocation("contracts")}/create/$projectId");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +23,26 @@ class _ProjectDetailContractOverviewSection extends StatelessWidget {
             "Hợp đồng",
             style: typography.lg.copyWith(fontWeight: FontWeight.w600),
           ),
-          ElevatedButton(
-            style: presets.button_style_default,
-            onPressed: () => {onPressCreateContractButton(context)},
-            child: Icon(Icons.add),
+          BlocBuilder<ProjectDetailBloc, PageDetailState<ProjectRecord>>(
+            builder: (context, state) {
+              return ElevatedButton(
+                style: presets.button_style_default_rounded,
+                onPressed:
+                    (state is ProjectDetailStateRecordReady)
+                        ? () => {
+                          onPressCreateContractButton(
+                            context: context,
+                            projectId:
+                                (context.read<ProjectDetailBloc>().state
+                                        as ProjectDetailStateRecordReady)
+                                    .record
+                                    .id!,
+                          ),
+                        }
+                        : null,
+                child: Icon(Icons.add),
+              );
+            },
           ),
         ],
       ),

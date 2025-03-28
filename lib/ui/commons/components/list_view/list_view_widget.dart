@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_work_mgmt_app/commons/models/model.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/data_repositories/data_repository.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/bloc/list_view_bloc.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/components/loading_widgets/loading_circle_widget.dart';
-import 'package:forui/forui.dart';
 
-class ListViewWidget<T> extends StatefulWidget {
+class ListViewWidget<T extends DataRecord> extends StatefulWidget {
   final ScrollController? scrollController;
-  final Widget Function(T) listItemBuilder;
+  final Widget Function(List<T>) listBuilder;
+  final ListViewBloc<T>? listBloc;
 
   const ListViewWidget({
     super.key,
-    required this.listItemBuilder,
     this.scrollController,
+    required this.listBuilder,
+    this.listBloc,
   });
 
   @override
-  State<StatefulWidget> createState() => ListViewWidgetState<T>();
+  State<StatefulWidget> createState() => _ListViewWidgetState<T>();
 }
 
-class ListViewWidgetState<T> extends State<ListViewWidget<T>> {
+class _ListViewWidgetState<T extends DataRecord>
+    extends State<ListViewWidget<T>> {
   @override
   void initState() {
     if (widget.scrollController != null) {
@@ -26,7 +29,8 @@ class ListViewWidgetState<T> extends State<ListViewWidget<T>> {
       scrollController.addListener(() {
         if (scrollController.position.pixels >=
             scrollController.position.maxScrollExtent) {
-          final taskListBloc = context.read<ListViewBloc<T>>();
+          final taskListBloc =
+              widget.listBloc ?? context.read<ListViewBloc<T>>();
           if (!taskListBloc.state.isLast &&
               taskListBloc.state is ListViewStateReady) {
             taskListBloc.add(ListViewEventLoadMoreCall());
@@ -48,8 +52,8 @@ class ListViewWidgetState<T> extends State<ListViewWidget<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = context.theme.colorScheme;
-    return BlocBuilder<ListViewBloc<T>, ListViewState<T>>(
+    final childWidget = BlocBuilder<ListViewBloc<T>, ListViewState<T>>(
+      bloc: widget.listBloc,
       builder: (context, state) {
         if (state.itemList.isEmpty) {
           return Align(
@@ -57,18 +61,21 @@ class ListViewWidgetState<T> extends State<ListViewWidget<T>> {
             child: Text("Chưa có dữ liệu"),
           );
         } else {
-          return Column(
-            children: [
-              for (final item in state.itemList) widget.listItemBuilder(item),
-              if (state is ListViewStateLoading)
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8),
-                  child: LoadingCircleWidget(),
-                ),
-            ],
-          );
+          return widget.listBuilder(state.itemList);
         }
       },
     );
+
+    return widget.listBloc != null
+        ? BlocProvider<ListViewBloc<T>>.value(
+          value: widget.listBloc!,
+          child: childWidget,
+        )
+        : BlocProvider<ListViewBloc<T>>(
+          create: (context) {
+            return ListViewBloc<T>(dataRepo: context.read<DataRepository<T>>());
+          },
+          child: childWidget,
+        );
   }
 }

@@ -4,16 +4,18 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_work_mgmt_app/commons/models/model.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/data_repositories/data_repository.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/data_repositories/data_repository.dart';
 
 part "page_detail_event.dart";
 part "page_detail_state.dart";
 
-class PageDetailBloc<T> extends Bloc<PageDetailEvent<T>, PageDetailState<T>> {
-  final DataRepository<T> dataRepo;
+class PageDetailBloc<T extends DataRecord>
+    extends Bloc<PageDetailEvent<T>, PageDetailState<T>> {
+  final DataRepository<T> _dataRepo;
 
-  PageDetailBloc({required this.dataRepo, required ID recordId})
-    : super(PageDetailState<T>()) {
+  PageDetailBloc({required DataRepository<T> dataRepo, required ID recordId})
+    : _dataRepo = dataRepo,
+      super(PageDetailState<T>()) {
     on<PageDetailEventInit<T>>(onPageDetailEventInit);
     add(PageDetailEventInit<T>(recordId: recordId));
   }
@@ -27,7 +29,7 @@ class PageDetailBloc<T> extends Bloc<PageDetailEvent<T>, PageDetailState<T>> {
 
     final record = await Future.delayed(
       Duration(seconds: 2),
-      () => dataRepo.getOne(),
+      () => _dataRepo.getOne(),
     );
 
     emit(PageDetailStateRecordReady(record: record));

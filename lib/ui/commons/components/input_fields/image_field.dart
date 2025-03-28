@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/blocs/theme/theme_bloc.dart';
+import 'package:flutter_color/flutter_color.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/ui/blocs/theme/theme_bloc.dart';
 import 'package:forui/forui.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
@@ -11,13 +12,15 @@ class ImagePickerField extends StatefulWidget {
   final Widget? label;
   final _imagePicker = ImagePicker();
   final FormFieldState<File?>? state;
+  final String? errorText;
   final File? _initValue;
-  final ValueChanged<File?>? onChanged; // Accept onChanged
+  final ValueChanged<File?>? onChanged;
 
   ImagePickerField({
     super.key,
     this.label,
     this.state,
+    this.errorText,
     File? initValue,
     this.onChanged,
   }) : _initValue = initValue;
@@ -58,7 +61,9 @@ class _ImageFieldState extends State<ImagePickerField> {
 
   void _updateSelectedImage(XFile image) {
     inputImage.value = File(image.path);
-    widget.state?.didChange(inputImage.value);
+    if (widget.onChanged != null) {
+      widget.onChanged!(inputImage.value); // Notify parent about the change
+    }
   }
 
   @override
@@ -78,12 +83,12 @@ class _ImageFieldState extends State<ImagePickerField> {
             spacing: 10,
             children: [
               OutlinedButton(
-                style: presets.button_style_default,
+                style: presets.button_style_default_rounded,
                 onPressed: _onPressPickImage,
                 child: Text("Ảnh từ thư viện"),
               ),
               OutlinedButton(
-                style: presets.button_style_default,
+                style: presets.button_style_default_rounded,
                 onPressed: _onPressCamera,
                 child: Text("Camera"),
               ),
@@ -100,15 +105,15 @@ class _ImageFieldState extends State<ImagePickerField> {
             }
           },
         ),
-        if (widget.state?.errorText != null)
+        if ((widget.state?.errorText != null) || (widget.errorText != null))
           Padding(
-            padding: EdgeInsets.symmetric(vertical: padding_md),
+            padding: EdgeInsets.symmetric(vertical: 4, horizontal: 20),
             child: Text(
               style: context.theme.typography.sm.copyWith(
-                color: context.theme.colorScheme.error,
+                color: context.theme.colorScheme.error.lighter(20),
                 fontWeight: FontWeight.w600,
               ),
-              widget.state!.errorText!,
+              widget.state?.errorText ?? widget.errorText!,
             ),
           ),
       ],
@@ -121,17 +126,21 @@ class ImagePickerFormField extends FormField<File> {
     super.key,
     Widget? label,
     super.validator,
-    onChanged,
+    String? errorText,
+    void Function(File?)? onChanged,
     File? initValue,
   }) : super(
          builder: (FormFieldState<File> state) {
            return ImagePickerField(
              label: label,
+             errorText: errorText,
              state: state,
              initValue: initValue,
              onChanged: (file) {
-               state.didChange(file);
-               onChanged(file);
+               state.didChange(file); // Notify FormField of change
+               if (onChanged != null) {
+                 onChanged(file); // Call external onChanged
+               }
              },
            );
          },

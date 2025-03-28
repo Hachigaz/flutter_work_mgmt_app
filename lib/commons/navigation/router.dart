@@ -6,8 +6,8 @@ import 'package:flutter_work_mgmt_app/ui/commons/components/menu_frame.dart';
 
 import 'package:flutter_work_mgmt_app/ui/pages/home/home.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/login/login_page.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/projects/bloc/project_root_repository.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/projects/project_root/project_root_page.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/projects/_bloc/project_root_repository.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/projects/project_root_page.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/account/account_info_page.dart';
 
 import "_routes/export.dart";

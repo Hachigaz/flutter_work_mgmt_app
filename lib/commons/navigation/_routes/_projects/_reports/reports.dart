@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_work_mgmt_app/commons/models/model.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/report/commons/form_builder/bloc/report_form_bloc.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/report/commons/form_builder/models/models.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/report/report_form/report_form_view_page.dart';
+import 'package:flutter_work_mgmt_app/commons/models/project.dart';
+import 'package:flutter_work_mgmt_app/commons/models/report.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/data_repositories/data_repository.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/reports/bloc/report_detail_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/reports/report_form/report_form_view_page.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/reports/schedule_create/_bloc/schedule_create_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/reports/schedule_create/schedule_create_page.dart';
 import 'package:go_router/go_router.dart';
 
 final reportRoute = GoRoute(
@@ -19,15 +23,18 @@ final reportRoute = GoRoute(
       routes: [
         ShellRoute(
           pageBuilder: (context, state, child) {
-            final ID reportId = ID.parse(state.pathParameters['id']!);
+            final ID scheduleId = ID.parse(state.pathParameters['id']!);
             return MaterialPage(
-              child: BlocProvider<ReportFormBloc>(
-                create:
-                    (context) => ReportFormBloc(
-                      buildType: BuildType.type_default,
-                      reportFormStructureId: 1,
-                      reportFormId: 1,
-                    ),
+              key: state.pageKey,
+              child: BlocProvider<ReportDetailBloc>(
+                create: (context) {
+                  return ReportDetailBloc(
+                    recordId: scheduleId,
+                    dataRepo: context.read<DataRepository<ReportSchedule>>(),
+                    taskReportRepo:
+                        context.read<DataRepository<TaskReportRecord>>(),
+                  );
+                },
                 child: child,
               ),
             );
@@ -42,6 +49,44 @@ final reportRoute = GoRoute(
           ],
         ),
       ],
+    ),
+    GoRoute(
+      path: "/templates/:id",
+      pageBuilder: (context, state) {
+        final ID taskId = ID.parse(state.pathParameters["id"]!);
+        final queryParams = state.uri.queryParameters;
+        return MaterialPage(
+          key: state.pageKey,
+          child: BlocProvider<ScheduleCreateBloc>(
+            create:
+                (context) => ScheduleCreateBloc(
+                  taskRepo: context.read<DataRepository<TaskRecord>>(),
+                  taskId: taskId,
+                  queryParams: queryParams,
+                ),
+            child: ScheduleCreatePage(),
+          ),
+        );
+      },
+    ),
+    GoRoute(
+      path: "/schedule_create/:task_id",
+      pageBuilder: (context, state) {
+        final ID taskId = ID.parse(state.pathParameters["task_id"]!);
+        final queryParams = state.uri.queryParameters;
+        return MaterialPage(
+          key: state.pageKey,
+          child: BlocProvider<ScheduleCreateBloc>(
+            create:
+                (context) => ScheduleCreateBloc(
+                  taskRepo: context.read<DataRepository<TaskRecord>>(),
+                  taskId: taskId,
+                  queryParams: queryParams,
+                ),
+            child: ScheduleCreatePage(),
+          ),
+        );
+      },
     ),
   ],
 );

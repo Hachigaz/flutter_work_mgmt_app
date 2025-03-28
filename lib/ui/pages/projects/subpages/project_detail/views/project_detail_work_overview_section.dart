@@ -34,7 +34,7 @@ class _ProjectDetailWorkOverviewSectionState
                 style: typography.lg.copyWith(fontWeight: FontWeight.w600),
               ),
               ElevatedButton(
-                style: presets.button_style_default,
+                style: presets.button_style_default_rounded,
                 onPressed:
                     (state is ProjectDetailStateRecordReady)
                         ? () => {
@@ -141,10 +141,9 @@ class _ProjectDetailWorkOverviewSectionState
                                 Padding(
                                   padding: EdgeInsets.only(top: padding_xl),
                                   child: Text(
-                                    "${25.toStringAsFixed(0)}%",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
+                                    "${(((state.record.completedWorkCount! / state.record.workItemCount!) * 100)).toStringAsFixed(1)}%",
+                                    style: typography.base.copyWith(
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ),

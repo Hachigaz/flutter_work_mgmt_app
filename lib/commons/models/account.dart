@@ -1,7 +1,6 @@
 import 'package:flutter_work_mgmt_app/commons/models/model.dart';
 
-class AccountRecord {
-  final ID? id;
+class AccountRecord extends DataRecord {
   final ID? staffId;
   final String? avatar;
   final String? loginName;
@@ -11,7 +10,7 @@ class AccountRecord {
   final DateTime? lastLogin;
 
   const AccountRecord({
-    this.id,
+    super.id,
     this.staffId,
     this.avatar,
     this.loginName,
@@ -31,7 +30,7 @@ enum Gender {
   const Gender({required this.label});
 }
 
-class StaffRecord {
+class StaffRecord extends DataRecord {
   final String? fullName;
   final DateTime? dob;
   final Gender? gender;
@@ -41,6 +40,7 @@ class StaffRecord {
   final DateTime? dateEmployed;
 
   const StaffRecord({
+    super.id,
     this.fullName,
     this.dob,
     this.gender,

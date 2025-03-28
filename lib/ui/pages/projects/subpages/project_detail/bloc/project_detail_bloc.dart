@@ -1,17 +1,17 @@
-import 'package:bloc/src/bloc.dart';
+import 'package:bloc/bloc.dart';
 import 'package:flutter_work_mgmt_app/commons/models/project.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/app_repositories/data_repositories/data_repository.dart';
+import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/data_repositories/data_repository.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_detail/page_detail_bloc.dart';
 
 part "project_detail_state.dart";
 
 class ProjectDetailBloc extends PageDetailBloc<ProjectRecord> {
-  final DataRepository<WorkItemRecord> workItemRepo;
+  final DataRepository<WorkItemRecord> _workItemRepo;
   ProjectDetailBloc({
     required super.dataRepo,
-    required this.workItemRepo,
+    required DataRepository<WorkItemRecord> workItemRepo,
     required super.recordId,
-  });
+  }) : _workItemRepo = workItemRepo;
 
   @override
   Future<void> onPageDetailEventInit(
@@ -20,12 +20,12 @@ class ProjectDetailBloc extends PageDetailBloc<ProjectRecord> {
   ) async {
     await super.onPageDetailEventInit(event, emit);
 
-    if (this.state is! PageDetailStateRecordReady) {
+    if (this.state is! PageDetailStateRecordReady<ProjectRecord>) {
       throw Exception("Unexpected error");
     }
-    final state = this.state as PageDetailStateRecordReady;
+    final state = this.state as PageDetailStateRecordReady<ProjectRecord>;
 
-    final activeWorkItems = workItemRepo.search("").itemList;
+    final activeWorkItems = _workItemRepo.search("").itemList;
 
     emit(
       ProjectDetailStateRecordReady(

@@ -4,8 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 
 class LoadingTextDisplayWidget extends StatefulWidget {
+  final String? displayMessage;
   final TextStyle? textStyle;
-  const LoadingTextDisplayWidget({super.key, this.textStyle});
+  const LoadingTextDisplayWidget({
+    super.key,
+    this.displayMessage,
+    this.textStyle,
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -39,7 +44,7 @@ class _LoadingTextDisplayWidgetState extends State<LoadingTextDisplayWidget> {
         valueListenable: textDotCounter,
         builder: (context, value, child) {
           return Text(
-            "Đang tải${"." * textDotCounter.value}",
+            "${widget.displayMessage ?? "Đang tải"}${"." * textDotCounter.value}",
             style: widget.textStyle ?? context.theme.typography.base,
           );
         },

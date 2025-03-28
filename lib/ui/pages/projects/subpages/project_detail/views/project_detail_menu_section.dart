@@ -23,7 +23,7 @@ class _ProjectDetailMenuSection extends StatelessWidget {
     // final colorScheme = context.theme.colorScheme;
     final presets = context.read<ThemeBloc>().state.presets;
 
-    final menuButtonStyle = presets.button_style_default.copyWith(
+    final menuButtonStyle = presets.button_style_default_rounded.copyWith(
       backgroundColor: WidgetStateProperty.all<Color>(
         presets.color_background_2,
       ),

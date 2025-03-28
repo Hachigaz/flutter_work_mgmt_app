@@ -1,5 +1,5 @@
 import 'package:flutter_work_mgmt_app/commons/models/model.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/report/commons/form_builder/models/models.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/reports/report_form/_models/models.dart';
 
 // enum ReportSectionType {
 //   numericInput(label: "Số liệu"),
@@ -20,21 +20,36 @@ import 'package:flutter_work_mgmt_app/ui/pages/report/commons/form_builder/model
 //       int inputCount,
 //     }); // xài trong template cho các báo cáo
 
-class ReportSchedule {
+class ReportFormTemplateRecord extends DataRecord {
+  final String formName;
+  final String description;
+  final String formStructureData;
+
+  ReportFormTemplateRecord({
+    required super.id,
+    required this.formName,
+    required this.description,
+    required this.formStructureData,
+  });
+}
+
+class ReportSchedule extends DataRecord {
   //for timestamp schedule type (1 - n)
-  final ID? id;
+
   final ID? taskId;
   final String? title;
   final DateTime? dueDate;
+  final ID? reportStructure;
   final bool? isReported;
   final ID? reportId;
   final bool? isActive;
 
   const ReportSchedule({
-    this.id,
+    super.id,
     this.taskId,
     this.title,
     this.dueDate,
+    this.reportStructure,
     this.isReported,
     this.reportId,
     this.isActive,
@@ -53,9 +68,9 @@ class ReportSchedule {
 //   const RecurringType({required this.label});
 // }
 
-// class ReportRecurringSchedule {
+// class ReportRecurringSchedule extends DataRecord{
 //   //for recurring schedule type (1 - n)
-//   final ID? id;
+//
 //   final ID? reportScheduleId;
 
 //   final String? title;
@@ -66,7 +81,7 @@ class ReportSchedule {
 //   final bool? isActive;
 
 //   const ReportRecurringSchedule({
-//     this.id,
+//     super.id,
 //     this.reportScheduleId,
 //     this.title,
 //     this.recurringType,
@@ -76,26 +91,27 @@ class ReportSchedule {
 //   });
 // }
 
-class TaskReportRecord {
-  final ID? id;
+class TaskReportRecord extends DataRecord {
   final ID? scheduleId;
   final DateTime? dateCreated;
   final ID? createdBy;
   final DateTime? lastUpdated;
   final ID? lastUpdatedBy;
   final bool? isSubmitted;
+  final DateTime? submittedDate;
   final ID? verifiedBy;
   final ReportFormData? reportData; // JSON report data
   final bool? isActive;
 
   const TaskReportRecord({
-    this.id,
+    super.id,
     this.scheduleId,
     this.dateCreated,
     this.createdBy,
     this.lastUpdated,
     this.lastUpdatedBy,
     this.isSubmitted,
+    this.submittedDate,
     this.verifiedBy,
     this.reportData,
     this.isActive,
