@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/ui/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/theme_bloc.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_work_mgmt_app/commons/models/model.dart';
-import 'package:flutter_work_mgmt_app/commons/models/project.dart';
+import 'package:flutter_work_mgmt_app/data/models/model.dart';
+import 'package:flutter_work_mgmt_app/data/models/project.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/ui/blocs/theme/presets/date_formats.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/presets/date_formats.dart';
 
 void _onPressDetailButton({
   required BuildContext context,
@@ -108,7 +108,7 @@ class ProjectItemDisplayLarge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = context.theme.colorScheme;
+    // final colorScheme = context.theme.colorScheme;
     final typography = context.theme.typography;
     final presets = context.read<ThemeBloc>().state.presets;
     return GestureDetector(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/auth/auth_repo.dart';
+import 'package:flutter_work_mgmt_app/providers/auth/auth_repo.dart';
 import 'package:forui/forui.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
 // import 'package:flutter_work_mgmt_app/ui/commons/utils/style_presets/common_presets.dart';

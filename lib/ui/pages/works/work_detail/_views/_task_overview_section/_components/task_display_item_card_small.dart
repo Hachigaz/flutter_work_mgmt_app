@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_work_mgmt_app/commons/models/project.dart';
+import 'package:flutter_work_mgmt_app/data/models/project.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 

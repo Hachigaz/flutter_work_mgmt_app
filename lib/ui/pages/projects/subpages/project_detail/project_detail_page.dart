@@ -4,8 +4,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_work_mgmt_app/commons/models/project.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/ui/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/data/models/project.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/theme_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/description_display_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/loading_widgets/loading_circle_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/loading_widgets/loading_text_display_widget.dart';
@@ -13,12 +13,12 @@ import 'package:flutter_work_mgmt_app/ui/commons/components/page_detail/page_det
 import 'package:flutter_work_mgmt_app/ui/pages/projects/subpages/project_detail/bloc/project_detail_bloc.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_work_mgmt_app/commons/models/model.dart';
+import 'package:flutter_work_mgmt_app/data/models/model.dart';
 
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_list_section.dart';
 
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/ui/blocs/theme/presets/date_formats.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/presets/date_formats.dart';
 
 part "views/project_detail_info_section.dart";
 part "views/project_detail_work_overview_section.dart";

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_work_mgmt_app/commons/models/project.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/data_repositories/data_repository.dart';
+import 'package:flutter_work_mgmt_app/data/models/project.dart';
+import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_detail/page_detail_bloc.dart';
 
 part "project_detail_state.dart";

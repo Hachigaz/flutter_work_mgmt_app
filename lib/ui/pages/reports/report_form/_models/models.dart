@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter_work_mgmt_app/commons/models/model.dart';
+import 'package:flutter_work_mgmt_app/data/models/model.dart';
 import 'package:formz/formz.dart';
 
 enum BuildType {

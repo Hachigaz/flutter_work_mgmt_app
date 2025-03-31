@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_work_mgmt_app/commons/models/model.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/data_repositories/data_repository.dart';
+import 'package:flutter_work_mgmt_app/data/models/model.dart';
+import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/bloc/list_view_bloc.dart';
 
 class ListViewWidget<T extends DataRecord> extends StatefulWidget {

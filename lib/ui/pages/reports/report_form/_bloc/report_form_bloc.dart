@@ -3,11 +3,11 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/data_repositories/data_repository.dart';
+import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/reports/report_form/_helpers/helpers.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/reports/bloc/report_detail_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:flutter_work_mgmt_app/commons/models/report.dart';
+import 'package:flutter_work_mgmt_app/data/models/report.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/reports/report_form/_models/form_inputs.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/reports/report_form/_models/models.dart';
 

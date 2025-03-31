@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_work_mgmt_app/commons/models/report.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/data_repositories/data_repository.dart';
+import 'package:flutter_work_mgmt_app/data/models/report.dart';
+import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/loading_widgets/loading_text_display_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_detail/page_detail_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/reports/report_form/_models/models.dart';

@@ -9,7 +9,7 @@ import 'package:flutter_work_mgmt_app/ui/commons/utils/helpers/color_helpers.dar
 const _mainNavBarItems = [
   (routeName: "home", icon: Icons.warehouse, label: "Trang chủ"),
   (routeName: "projects", icon: CupertinoIcons.hammer_fill, label: "Dự án"),
-  (routeName: "payment", icon: Icons.wallet, label: "Thanh toán"),
+  (routeName: "current_work", icon: Icons.work, label: "Công việc"),
   (routeName: "notification", icon: CupertinoIcons.bell, label: "Thông báo"),
   (routeName: "mailbox", icon: Icons.mail, label: "Hộp thư"),
   (routeName: "account", icon: Icons.person, label: "Tài khoản"),

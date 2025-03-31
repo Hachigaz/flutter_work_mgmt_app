@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_work_mgmt_app/commons/models/project.dart';
-import 'package:flutter_work_mgmt_app/commons/models/report.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/auth/auth_repo.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/data_repositories/data_repository.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/data_repositories/project_repository.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/data_repositories/report_form_template_repository.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/data_repositories/report_repository.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/data_repositories/report_schedule_repository.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/data_repositories/task_report_repository.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/data_repositories/task_repository.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/data_repositories/work_item_repository.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/app_loader_bloc/app_loader_bloc.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/app_loader_bloc/repos/storage_repo.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/ui/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/data/models/project.dart';
+import 'package:flutter_work_mgmt_app/data/models/report.dart';
+import 'package:flutter_work_mgmt_app/providers/auth/auth_repo.dart';
+import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
+import 'package:flutter_work_mgmt_app/data/repositories/project_repository.dart';
+import 'package:flutter_work_mgmt_app/data/repositories/report_form_template_repository.dart';
+import 'package:flutter_work_mgmt_app/data/repositories/report_repository.dart';
+import 'package:flutter_work_mgmt_app/data/repositories/report_schedule_repository.dart';
+import 'package:flutter_work_mgmt_app/data/repositories/task_report_repository.dart';
+import 'package:flutter_work_mgmt_app/data/repositories/task_repository.dart';
+import 'package:flutter_work_mgmt_app/data/repositories/work_item_repository.dart';
+import 'package:flutter_work_mgmt_app/providers/app_loader/app_loader_bloc.dart';
+import 'package:flutter_work_mgmt_app/providers/app_loader/repos/storage_repo.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/theme_bloc.dart';
 import 'package:forui/forui.dart';
-import 'package:flutter_work_mgmt_app/commons/navigation/router.dart';
+import 'package:flutter_work_mgmt_app/navigation/router.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

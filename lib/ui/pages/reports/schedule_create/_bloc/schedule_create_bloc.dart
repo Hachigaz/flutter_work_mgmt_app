@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_work_mgmt_app/commons/models/model.dart';
-import 'package:flutter_work_mgmt_app/commons/models/project.dart';
-import 'package:flutter_work_mgmt_app/commons/models/report.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/data_repositories/data_repository.dart';
+import 'package:flutter_work_mgmt_app/data/models/model.dart';
+import 'package:flutter_work_mgmt_app/data/models/project.dart';
+import 'package:flutter_work_mgmt_app/data/models/report.dart';
+import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
 
 part "schedule_create_event.dart";
 part "schedule_create_state.dart";

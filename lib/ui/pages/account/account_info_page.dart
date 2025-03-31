@@ -3,15 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_color/flutter_color.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/data_repositories/auth/auth_repo.dart';
-import 'package:flutter_work_mgmt_app/commons/providers/ui/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/providers/auth/auth_repo.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/theme_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/account/_widgets/account_detail_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/account/_widgets/option_menu_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/account/_widgets/staff_detail_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/account/_widgets/top_avatar_display.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_work_mgmt_app/commons/models/account.dart';
+import 'package:flutter_work_mgmt_app/data/models/account.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/account/bloc/account_info_page_repository.dart';
 
@@ -73,55 +73,53 @@ class _AccountInfoPageContent extends StatelessWidget {
               // left: padding_2xl,
               // right: padding_2xl,
             ),
-            child: Expanded(
-              child: ListView(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 35,
-                      left: 10,
-                      right: 10,
-                      bottom: 10,
-                    ),
-                    child: TopAvatarDisplay(),
+            child: ListView(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 35,
+                    left: 10,
+                    right: 10,
+                    bottom: 10,
                   ),
-                  Column(
-                    children: [
-                      StaffDetailWidget(),
-                      AccountDetailWidget(),
-                      OptionMenuWidget(),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            onClickLogoutButton(context);
-                          },
-                          style: presets.button_style_primary_rounded.copyWith(
-                            backgroundColor: WidgetStateProperty.all<Color>(
-                              colorScheme.primary.darker(30).withAlpha(180),
-                            ),
-                            shape: WidgetStateProperty.all<OutlinedBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.zero,
-                              ),
+                  child: TopAvatarDisplay(),
+                ),
+                Column(
+                  children: [
+                    StaffDetailWidget(),
+                    AccountDetailWidget(),
+                    OptionMenuWidget(),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          onClickLogoutButton(context);
+                        },
+                        style: presets.button_style_primary_rounded.copyWith(
+                          backgroundColor: WidgetStateProperty.all<Color>(
+                            colorScheme.primary.darker(30).withAlpha(180),
+                          ),
+                          shape: WidgetStateProperty.all<OutlinedBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.zero,
                             ),
                           ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 4),
-                            child: Text(
-                              "Đăng xuất",
-                              style: typography.base.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                              ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 4),
+                          child: Text(
+                            "Đăng xuất",
+                            style: typography.base.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),

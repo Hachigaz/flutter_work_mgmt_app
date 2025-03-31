@@ -1,4 +1,4 @@
-import 'package:flutter_work_mgmt_app/commons/models/project.dart';
+import 'package:flutter_work_mgmt_app/data/models/project.dart';
 
 class ProjectRootRepository {
   final projectRecord = ProjectRecord(

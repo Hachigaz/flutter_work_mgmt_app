@@ -4,6 +4,8 @@ import 'package:flutter_work_mgmt_app/ui/pages/account/bloc/account_info_page_re
 import 'package:forui/forui.dart';
 
 class TopAvatarDisplay extends StatelessWidget {
+  const TopAvatarDisplay({super.key});
+
   @override
   Widget build(BuildContext context) {
     final pageRepo = context.read<AccountInfoPageRepository>();
