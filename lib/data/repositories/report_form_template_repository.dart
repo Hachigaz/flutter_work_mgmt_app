@@ -1,13 +1,9 @@
-import 'dart:convert';
-import 'dart:math';
+part of "../data_layer.dart";
 
-import 'package:flutter_work_mgmt_app/commons/misc/random.dart';
-import 'package:flutter_work_mgmt_app/data/models/report.dart';
-import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/reports/report_form/_models/models.dart';
-
-class ReportFormTemplateRepository
+class _ReportFormTemplateRepository
     extends DataRepository<ReportFormTemplateRecord> {
+  const _ReportFormTemplateRepository();
+
   @override
   ReportFormTemplateRecord getOne() {
     return _generateItems(count: 1)[0];
@@ -157,7 +153,7 @@ final List<List<FormFieldItem>> _mockFieldsList = [
   ],
   [
     FormFieldItem(
-      fieldItemIndex: 6,
+      fieldItemIndex: 1,
       label: "Thông tin B",
       name: "name_info_b",
       type: FieldType.textbox,
@@ -165,7 +161,7 @@ final List<List<FormFieldItem>> _mockFieldsList = [
       required: false,
     ),
     FormFieldItem(
-      fieldItemIndex: 7,
+      fieldItemIndex: 2,
       label: "Hình ảnh máy",
       name: "name_image",
       type: FieldType.image,
@@ -175,7 +171,7 @@ final List<List<FormFieldItem>> _mockFieldsList = [
   ],
   [
     FormFieldItem(
-      fieldItemIndex: 6,
+      fieldItemIndex: 1,
       label: "Thông số A",
       name: "name_info_a",
       type: FieldType.numberInput,
@@ -183,7 +179,7 @@ final List<List<FormFieldItem>> _mockFieldsList = [
       required: false,
     ),
     FormFieldItem(
-      fieldItemIndex: 6,
+      fieldItemIndex: 2,
       label: "Thông số B",
       name: "name_info_b",
       type: FieldType.numberInput,
@@ -191,7 +187,7 @@ final List<List<FormFieldItem>> _mockFieldsList = [
       required: false,
     ),
     FormFieldItem(
-      fieldItemIndex: 6,
+      fieldItemIndex: 3,
       label: "Thông số C",
       name: "name_info_c",
       type: FieldType.numberInput,

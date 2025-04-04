@@ -11,15 +11,15 @@ const _mainNavBarItems = [
   (routeName: "projects", icon: CupertinoIcons.hammer_fill, label: "Dự án"),
   (routeName: "current_work", icon: Icons.work, label: "Công việc"),
   (routeName: "notification", icon: CupertinoIcons.bell, label: "Thông báo"),
-  (routeName: "mailbox", icon: Icons.mail, label: "Hộp thư"),
+  // (routeName: "mailbox", icon: Icons.mail, label: "Hộp thư"),
   (routeName: "account", icon: Icons.person, label: "Tài khoản"),
 ];
 
 class _MainAppNavBar extends StatelessWidget {
-  final int _currentIndex;
+  final StatefulNavigationShell _navigationShell;
 
-  const _MainAppNavBar({required int currentIndex})
-    : _currentIndex = currentIndex;
+  const _MainAppNavBar({required StatefulNavigationShell navigationShell})
+    : _navigationShell = navigationShell;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _MainAppNavBar extends StatelessWidget {
     return BottomNavigationBar(
       backgroundColor: colorScheme.background,
       type: BottomNavigationBarType.fixed,
-      currentIndex: _currentIndex,
+      currentIndex: _navigationShell.currentIndex,
       selectedItemColor: selectedItemColor,
       unselectedItemColor: unselectedItemColor,
       selectedLabelStyle: typography.sm.copyWith(
@@ -55,7 +55,8 @@ class _MainAppNavBar extends StatelessWidget {
       iconSize: 20.sp,
       onTap: (value) {
         if (context.mounted) {
-          context.goNamed(_mainNavBarItems[value].routeName);
+          // context.goNamed(_mainNavBarItems[value].routeName);
+          _navigationShell.goBranch(value);
         }
       },
       items: [
@@ -93,9 +94,7 @@ class MainAppScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: navigationShell,
-      bottomNavigationBar: _MainAppNavBar(
-        currentIndex: navigationShell.currentIndex,
-      ),
+      bottomNavigationBar: _MainAppNavBar(navigationShell: navigationShell),
     );
   }
 }

@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_work_mgmt_app/data/models/report.dart';
+import 'package:flutter_work_mgmt_app/data/models/reports.dart';
 import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_detail/page_detail_bloc.dart';
 
 part "report_detail_state.dart";
 
-class ReportDetailBloc extends PageDetailBloc<ReportSchedule> {
+class ReportDetailBloc extends PageDetailBloc<ReportScheduleRecord> {
   final DataRepository<TaskReportRecord> _taskReportRepo;
 
   ReportDetailBloc({
@@ -18,15 +18,16 @@ class ReportDetailBloc extends PageDetailBloc<ReportSchedule> {
 
   @override
   Future<void> onPageDetailEventInit(
-    PageDetailEventInit<ReportSchedule> event,
-    Emitter<PageDetailState<ReportSchedule>> emit,
+    PageDetailEventInit<ReportScheduleRecord> event,
+    Emitter<PageDetailState<ReportScheduleRecord>> emit,
   ) async {
     await super.onPageDetailEventInit(event, emit);
 
-    if (this.state is! PageDetailStateRecordReady<ReportSchedule>) {
+    if (this.state is! PageDetailStateRecordReady<ReportScheduleRecord>) {
       throw Exception("Unexpected Error");
     }
-    final state = this.state as PageDetailStateRecordReady<ReportSchedule>;
+    final state =
+        this.state as PageDetailStateRecordReady<ReportScheduleRecord>;
 
     late final TaskReportRecord reportRecord;
 

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_color/flutter_color.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_work_mgmt_app/data/models/model.dart';
-import 'package:flutter_work_mgmt_app/data/models/project.dart';
-import 'package:flutter_work_mgmt_app/data/models/report.dart';
+import 'package:flutter_work_mgmt_app/data/models/projects.dart';
+import 'package:flutter_work_mgmt_app/data/models/reports.dart';
 import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
 import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/list_items/report_schedule_display_item_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/bloc/list_view_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/list_view_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/loading_widgets/loading_circle_widget.dart';
@@ -14,233 +12,48 @@ import 'package:flutter_work_mgmt_app/ui/commons/components/page_detail/page_det
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_list_section.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/search_bar_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/presets/date_formats.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/tasks/_bloc/task_detail_bloc.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
-
-class _ReportScheduleListItem extends StatelessWidget {
-  final ReportSchedule schedule;
-
-  void onTapReportItem({required BuildContext context, required ID reportId}) {
-    context.push("${context.namedLocation("reports")}/$reportId/detail");
-  }
-
-  const _ReportScheduleListItem({required this.schedule});
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = context.theme.colorScheme;
-    final typography = context.theme.typography;
-    final presets = context.read<ThemeBloc>().state.presets;
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      spacing: 4,
-      children: [
-        Expanded(
-          flex: 3,
-          child: Text(
-            date_fmat_datemonth.format(schedule.dueDate!),
-            style: typography.lg.copyWith(
-              fontWeight: FontWeight.w800,
-              fontSize: 15.sp,
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 7,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            decoration: BoxDecoration(
-              color: colorScheme.primary.darker(30).withAlpha(130),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Badge(
-                  padding: EdgeInsets.all(0),
-                  offset: Offset(-50, -10),
-                  backgroundColor: Colors.white.withAlpha(0),
-                  label:
-                      (schedule.dueDate!.isBefore(DateTime.now()))
-                          ? Row(
-                            children: [
-                              Icon(
-                                Icons.warning_amber_rounded,
-                                color: colorScheme.error,
-                                size: 20,
-                              ),
-                              Text(
-                                "Trễ hạn",
-                                style: typography.sm.copyWith(
-                                  color: colorScheme.error,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ],
-                          )
-                          : SizedBox(),
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 5),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        schedule.title != null
-                            ? "${schedule.title}\n\n"
-                            : "Báo cáo",
-                        style: typography.lg.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                        maxLines: 2,
-                      ),
-                    ),
-                  ),
-                ),
-                Text(
-                  "Trạng thái: ${schedule.reportId == null ? "Chưa lập báo cáo" : "Chưa hoàn thành"}",
-                  style: typography.base,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      date_fmat_date.format(schedule.dueDate!),
-                      style: typography.base,
-                    ),
-                    ElevatedButton(
-                      style: presets.button_style_default_rounded.copyWith(
-                        padding: WidgetStateProperty.all(
-                          EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                        ),
-                        backgroundColor: WidgetStateProperty.all(
-                          colorScheme.primary.darker(20),
-                        ),
-                      ),
-                      onPressed: () {
-                        onTapReportItem(
-                          context: context,
-                          reportId: schedule.id!,
-                        );
-                      },
-                      child: Text(
-                        (schedule.reportId == null)
-                            ? "Lập báo cáo"
-                            : "Chỉnh sửa",
-                        style: typography.sm.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _ReportScheduleNotSentListItem extends StatelessWidget {
-  final ReportSchedule schedule;
-
-  const _ReportScheduleNotSentListItem({required this.schedule});
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = context.theme.colorScheme;
-    final typography = context.theme.typography;
-    final presets = context.read<ThemeBloc>().state.presets;
-
-    void onPressEditButton({required BuildContext context}) {
-      print('Chỉnh sửa');
-    }
-
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8),
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: colorScheme.primary.darker(35).withAlpha(150),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              schedule.title!,
-              style: typography.lg.copyWith(fontWeight: FontWeight.w600),
-            ),
-            Text("Hạn báo cáo: ${date_fmat_date.format(schedule.dueDate!)}"),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(),
-                ElevatedButton(
-                  style: presets.button_style_default_rounded.copyWith(
-                    padding: WidgetStateProperty.all(
-                      EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                    ),
-                    backgroundColor: WidgetStateProperty.all(
-                      colorScheme.primary.darker(20),
-                    ),
-                  ),
-                  onPressed: () {
-                    onPressEditButton(context: context);
-                  },
-                  child: Text(
-                    "Chỉnh sửa",
-                    style: typography.base.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class _NotSentReportSection extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
-    final scheduleBloc = ListViewBloc<ReportSchedule>(
-      dataRepo: context.read<DataRepository<ReportSchedule>>(),
+    final scheduleBloc = ListViewBloc<ReportScheduleRecord>(
+      dataRepo: context.read<DataRepository<ReportScheduleRecord>>(),
     );
     return Column(
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           child: SearchBarWidget<
-            ReportSchedule,
-            ListViewStateLoading<ReportSchedule>,
-            ListViewEventSearchCall<ReportSchedule>
+            ReportScheduleRecord,
+            ListViewStateLoading<ReportScheduleRecord>,
+            ListViewEventSearchCall<ReportScheduleRecord>
           >(
             hintText: "Nhập tên báo cáo",
             searchCallCreator:
-                (value) =>
-                    ListViewEventSearchCall<ReportSchedule>(searchValue: value),
+                (value) => ListViewEventSearchCall<ReportScheduleRecord>(
+                  searchValue: value,
+                ),
             listBloc: scheduleBloc,
           ),
         ),
-        ListViewWidget<ReportSchedule>(
+        ListViewWidget<ReportScheduleRecord>(
           listBloc: scheduleBloc,
           listBuilder: (itemList) {
-            return Column(
-              children: [
-                for (final item in itemList)
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 4),
-                    child: _ReportScheduleNotSentListItem(schedule: item),
-                  ),
-              ],
+            return Padding(
+              padding: EdgeInsets.only(top: 8, bottom: 8),
+              child: Column(
+                children: [
+                  for (final item in itemList)
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 4),
+                      child: ReportScheduleListItemWidget(schedule: item),
+                    ),
+                ],
+              ),
             );
           },
         ),
@@ -257,14 +70,17 @@ class _UpcomingReportSection extends StatelessWidget {
     return BlocBuilder<TaskDetailBloc, PageDetailState<TaskRecord>>(
       builder: (context, state) {
         if (state is TaskDetailStateRecordReady) {
-          return Column(
-            children: [
-              for (final schedule in state.upcomingReportSchedule)
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: _ReportScheduleListItem(schedule: schedule),
-                ),
-            ],
+          return Padding(
+            padding: EdgeInsets.only(top: 8, bottom: 8),
+            child: Column(
+              children: [
+                for (final schedule in state.upcomingReportSchedule)
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    child: ReportScheduleListItemWidget(schedule: schedule),
+                  ),
+              ],
+            ),
           );
         } else {
           return LoadingCircleWidget();
@@ -399,18 +215,18 @@ class _ScheduleCreateButtonState extends State<_ScheduleCreateButton>
     );
     context.push(uri.toString());
   }
-}
 
-void onClickCreateRecursiveReportSchedule({required BuildContext context}) {
-  final taskId =
-      (context.read<TaskDetailBloc>().state as TaskDetailStateRecordReady)
-          .record
-          .id;
+  void onClickCreateRecursiveReportSchedule({required BuildContext context}) {
+    final taskId =
+        (context.read<TaskDetailBloc>().state as TaskDetailStateRecordReady)
+            .record
+            .id;
 
-  final params = {"create_opt": "recursive"};
-  final uri = Uri(
-    path: "${context.namedLocation("reports")}/schedule_create/$taskId",
-    queryParameters: params,
-  );
-  context.push(uri.toString());
+    final params = {"create_opt": "recursive"};
+    final uri = Uri(
+      path: "${context.namedLocation("reports")}/schedule_create/$taskId",
+      queryParameters: params,
+    );
+    context.push(uri.toString());
+  }
 }

@@ -2,7 +2,7 @@ part of "task_detail_bloc.dart";
 
 class TaskDetailStateRecordReady
     extends PageDetailStateRecordReady<TaskRecord> {
-  final List<ReportSchedule> upcomingReportSchedule;
+  final List<ReportScheduleRecord> upcomingReportSchedule;
 
   const TaskDetailStateRecordReady({
     required super.record,

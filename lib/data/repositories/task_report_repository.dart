@@ -1,8 +1,8 @@
-import 'package:flutter_work_mgmt_app/commons/misc/random.dart';
-import 'package:flutter_work_mgmt_app/data/models/report.dart';
-import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
+part of "../data_layer.dart";
 
-class TaskReportRepository extends DataRepository<TaskReportRecord> {
+class _TaskReportRepository extends DataRepository<TaskReportRecord> {
+  const _TaskReportRepository();
+
   @override
   TaskReportRecord getOne() {
     return _generateItems(count: 1)[0];

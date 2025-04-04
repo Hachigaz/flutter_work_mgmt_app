@@ -9,10 +9,13 @@ class LoadingCircleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = context.theme.colorScheme;
-    return Align(
-      alignment: Alignment.center,
-      child: CircularProgressIndicator(
-        color: circleColor ?? colorScheme.secondaryForeground,
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 15),
+      child: Align(
+        alignment: Alignment.center,
+        child: CircularProgressIndicator(
+          color: circleColor ?? colorScheme.secondaryForeground,
+        ),
       ),
     );
   }

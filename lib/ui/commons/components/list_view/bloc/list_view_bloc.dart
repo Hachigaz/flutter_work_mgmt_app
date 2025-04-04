@@ -16,13 +16,23 @@ class ListViewBloc<T extends DataRecord>
 
   ListViewBloc({required DataRepository<T> dataRepo})
     : _dataRepo = dataRepo,
-      super(
-        ListViewState<T>(itemList: [], currentSearchValue: "", isLast: false),
-      ) {
+      super(ListViewStateInitial<T>()) {
+    on<_ListViewEventInit<T>>(_onInitBloc);
     on<ListViewEventSearchCall<T>>(_onListViewSeach);
     on<ListViewEventLoadMoreCall<T>>(_onListViewLoadMore);
 
-    add(ListViewEventSearchCall(searchValue: ""));
+    add(_ListViewEventInit<T>());
+  }
+
+  Future<void> _onInitBloc(
+    _ListViewEventInit<T> event,
+    Emitter<ListViewState<T>> emit,
+  ) async {
+    emit(ListViewStateInitialLoading<T>());
+
+    await Future.delayed(Duration(seconds: 1));
+
+    add(ListViewEventSearchCall<T>(searchValue: ""));
   }
 
   Future<void> _onListViewSeach(
@@ -31,9 +41,9 @@ class ListViewBloc<T extends DataRecord>
   ) async {
     emit(
       ListViewStateLoading<T>(
-        itemList: state.itemList,
-        currentSearchValue: state.currentSearchValue,
-        isLast: state.isLast,
+        itemList: [],
+        currentSearchValue: event.searchValue,
+        isLast: true,
       ),
     );
 
@@ -57,6 +67,8 @@ class ListViewBloc<T extends DataRecord>
     ListViewEventLoadMoreCall<T> event,
     Emitter<ListViewState<T>> emit,
   ) async {
+    final state = this.state as ListViewStateReadyBase<T>;
+
     emit(
       ListViewStateLoading<T>(
         itemList: state.itemList,

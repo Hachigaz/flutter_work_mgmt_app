@@ -32,6 +32,22 @@ class _TaskListDisplayItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 6),
+                    child: Icon(
+                      Icons.task_alt_rounded,
+                      size: 20,
+                      color: colorScheme.foreground,
+                    ),
+                  ),
+                  Text(
+                    "Công việc",
+                    style: typography.xl.copyWith(fontWeight: FontWeight.w700),
+                  ),
+                ],
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: padding_md),
                 child: Text(
@@ -46,7 +62,14 @@ class _TaskListDisplayItem extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: padding_sm),
                 child: Text(
-                  "Trạng thái: ${"Đang hoạt động"}",
+                  "Trạng thái: ${_taskRecord.status!.label}",
+                  style: typography.base,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: padding_sm),
+                child: Text(
+                  "Mức độ ưu tiên: ${_taskRecord.priority!.label}",
                   style: typography.base,
                 ),
               ),
@@ -87,17 +110,20 @@ class _WorkItemTaskListViewSection extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: padding_lg),
       child: Column(
         children: [
-          SearchBarWidget<
-            TaskRecord,
-            ListViewStateLoading<TaskRecord>,
-            ListViewEventSearchCall<TaskRecord>
-          >(
-            hintText: "Nhập tên công việc",
-            searchCallCreator:
-                (searchValue) => ListViewEventSearchCall<TaskRecord>(
-                  searchValue: searchValue,
-                ),
-            listBloc: taskListBloc,
+          Padding(
+            padding: EdgeInsets.only(top: 6, bottom: 6, left: 10),
+            child: SearchBarWidget<
+              TaskRecord,
+              ListViewStateLoading<TaskRecord>,
+              ListViewEventSearchCall<TaskRecord>
+            >(
+              hintText: "Nhập tên công việc",
+              searchCallCreator:
+                  (searchValue) => ListViewEventSearchCall<TaskRecord>(
+                    searchValue: searchValue,
+                  ),
+              listBloc: taskListBloc,
+            ),
           ),
           ListViewWidget<TaskRecord>(
             listBuilder: (taskList) {

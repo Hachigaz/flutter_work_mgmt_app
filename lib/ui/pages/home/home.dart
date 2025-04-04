@@ -12,34 +12,39 @@ class _HomePageContent extends StatelessWidget {
     final sectionPadding = padding_3xl;
     return ScrollingBackgroundWidget(
       scrollController: _scrollController,
-      background: Image.asset("assets/images/app-background.jpg"),
+      background: Opacity(
+        opacity: 0.3,
+        child: Image.asset("assets/images/app-background.jpg"),
+      ),
       child: Padding(
         padding: EdgeInsets.only(
           top: status_bar_offset,
           left: padding_3xl,
           right: padding_3xl,
         ),
-        child: ListView(
+        child: SingleChildScrollView(
           controller: _scrollController,
-          children: [
-            HomePageAppTitle(),
-            SizedBox(height: spacing_4xl),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: padding_md),
-              child: HomePageSearchBar(),
-            ),
-            SizedBox(height: padding_6xl),
-            HomePageRevenueGraph(),
+          child: Column(
+            children: [
+              HomePageAppTitle(),
+              SizedBox(height: spacing_4xl),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: padding_md),
+                child: HomePageSearchBar(),
+              ),
+              SizedBox(height: padding_6xl),
+              HomePageRevenueGraph(),
 
-            SizedBox(height: padding_4xl),
-            SizedBox(height: sectionPadding),
-            HomePageToolbar(),
+              SizedBox(height: padding_4xl),
+              SizedBox(height: sectionPadding),
+              HomePageToolbar(),
 
-            HomePageCalendarInfoSection(),
-            SizedBox(height: sectionPadding),
-            HomePageSwipableList(),
-            SizedBox(height: padding_5xl),
-          ],
+              HomePageCalendarInfoSection(),
+              SizedBox(height: sectionPadding),
+              HomePageSwipableList(),
+              SizedBox(height: padding_5xl),
+            ],
+          ),
         ),
       ),
     );

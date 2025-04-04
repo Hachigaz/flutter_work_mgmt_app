@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_list_section.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/swipable_list_view.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
@@ -45,17 +44,28 @@ class _HomePageSwipableListItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: padding_2xl,
-          horizontal: padding_2xl,
-        ),
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         child: Row(
           children: [
             Padding(
-              padding: EdgeInsets.only(right: padding_md),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: _image,
+              padding: EdgeInsets.only(right: 8),
+              child: SizedBox(
+                height: double.infinity,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      double size =
+                          constraints.maxHeight; // Get max parent height
+
+                      return SizedBox(
+                        width: size, // Set width same as height
+                        height: size,
+                        child: FittedBox(fit: BoxFit.cover, child: _image),
+                      );
+                    },
+                  ),
+                ),
               ),
             ),
             Flexible(
@@ -66,6 +76,7 @@ class _HomePageSwipableListItem extends StatelessWidget {
                     padding: EdgeInsets.only(bottom: padding_md),
                     child: Text(
                       _title,
+                      maxLines: 2,
                       style: typography.sm.copyWith(
                         fontWeight: FontWeight.w600,
                         color: colorScheme.foreground,
@@ -76,6 +87,7 @@ class _HomePageSwipableListItem extends StatelessWidget {
                     padding: EdgeInsets.only(bottom: padding_md),
                     child: Text(
                       _description,
+                      maxLines: 3,
                       style: typography.sm.copyWith(
                         color: colorScheme.foreground,
                       ),
@@ -85,6 +97,7 @@ class _HomePageSwipableListItem extends StatelessWidget {
                     padding: EdgeInsets.only(bottom: padding_md),
                     child: Text(
                       _extra,
+                      maxLines: 1,
                       style: typography.sm.copyWith(
                         fontWeight: FontWeight.w600,
                         color: colorShift(color: colorScheme.foreground, g: 40),
@@ -107,34 +120,35 @@ class HomePageSwipableList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageListSection(
-      labelText: "Bảng tin mời thầu",
+      labelText: "Bảng tin công việc",
       child: SizedBox(
-        height: 100.h,
+        height: 160,
         child: SwipableListView(
+          viewportFraction: 0.85,
           children: [
             _HomePageSwipableListItem(
-              title: "Thông báo mời thầu",
-              description: "Hợp tác thân thiện - phát triển bền vững",
+              title: "Thông báo thay đổi lịch công việc\n",
+              description: "Lịch công việc thay đổi\n\n",
               extra: "Trạng thái: Mới",
-              image: Image.asset("assets/images/cover.jpg"),
+              image: Image.asset("assets/images/calendar.jpg"),
             ),
             _HomePageSwipableListItem(
-              title: "Thông báo mời thầu",
-              description: "Hợp tác thân thiện - phát triển bền vững",
+              title: "Thông báo thay đổi lịch công việc\n",
+              description: "Lịch công việc thay đổi\n\n",
               extra: "Trạng thái: Mới",
-              image: Image.asset("assets/images/cover.jpg"),
+              image: Image.asset("assets/images/calendar.jpg"),
             ),
             _HomePageSwipableListItem(
-              title: "Thông báo mời thầu",
-              description: "Hợp tác thân thiện - phát triển bền vững",
+              title: "Thông báo thay đổi lịch công việc\n",
+              description: "Lịch công việc thay đổi\n\n",
               extra: "Trạng thái: Mới",
-              image: Image.asset("assets/images/cover.jpg"),
+              image: Image.asset("assets/images/calendar.jpg"),
             ),
             _HomePageSwipableListItem(
-              title: "Thông báo mời thầu",
-              description: "Hợp tác thân thiện - phát triển bền vững",
+              title: "Thông báo thay đổi lịch công việc\n",
+              description: "Lịch công việc thay đổi\n\n",
               extra: "Trạng thái: Mới",
-              image: Image.asset("assets/images/cover.jpg"),
+              image: Image.asset("assets/images/calendar.jpg"),
             ),
           ],
         ),

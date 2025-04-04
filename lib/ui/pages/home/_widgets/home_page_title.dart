@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_work_mgmt_app/providers/auth/auth_repo.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
 import 'package:forui/forui.dart';
 
@@ -18,16 +20,16 @@ class HomePageAppTitle extends StatelessWidget {
               children: [
                 TextSpan(
                   text: "Môi trường ",
-                  style: typography.xl.copyWith(
+                  style: typography.xl2.copyWith(
                     color: Colors.blue,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
                 TextSpan(
                   text: "Á Châu",
-                  style: typography.xl.copyWith(
+                  style: typography.xl2.copyWith(
                     color: Colors.red,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
               ],
@@ -49,8 +51,12 @@ class HomePageAppTitle extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: "Á Châu",
-                      style: typography.xl.copyWith(
+                      text:
+                          context
+                              .read<AuthRepository>()
+                              .currentStaffInfo!
+                              .fullName,
+                      style: typography.xl2.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
                     ),

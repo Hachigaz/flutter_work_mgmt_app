@@ -4,7 +4,7 @@ import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/theme_bloc.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_work_mgmt_app/data/models/model.dart';
-import 'package:flutter_work_mgmt_app/data/models/project.dart';
+import 'package:flutter_work_mgmt_app/data/models/projects.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
 import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/presets/date_formats.dart';
 
@@ -81,6 +81,7 @@ class ProjectListItem extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: padding_md),
                 child: Text(
                   "Địa chỉ: ${_projectRecord.workAddress}",
+                  maxLines: 1,
                   style: typography.base,
                 ),
               ),
@@ -119,7 +120,7 @@ class ProjectItemDisplayLarge extends StatelessWidget {
           ),
       child: Container(
         decoration: BoxDecoration(
-          color: presets.color_background_primary,
+          color: presets.color_background_primary.withAlpha(150),
           borderRadius: BorderRadius.circular(15),
         ),
         padding: EdgeInsets.all(padding_lg),
@@ -141,7 +142,11 @@ class ProjectItemDisplayLarge extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: padding_md),
+              padding: EdgeInsets.only(
+                left: padding_md,
+                right: padding_md,
+                bottom: 6,
+              ),
               child: Text(
                 "${_projectRecord.name}\n",
                 style: typography.xl.copyWith(
@@ -152,12 +157,24 @@ class ProjectItemDisplayLarge extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: padding_md),
+              child: Text(
+                "Địa chỉ: ${_projectRecord.workAddress}",
+                maxLines: 1,
+                style: typography.base.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white.withAlpha(200),
+                ),
+              ),
+            ),
             Align(
               alignment: Alignment.bottomLeft,
               child: Text(
                 "Ngày khởi công: ${date_fmat_date.format(_projectRecord.startDate!)}",
-                style: typography.sm.copyWith(
+                style: typography.base.copyWith(
                   color: Colors.white.withAlpha(200),
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),

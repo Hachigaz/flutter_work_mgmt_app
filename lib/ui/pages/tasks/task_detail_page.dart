@@ -51,7 +51,7 @@ class TaskDetailPage extends StatelessWidget {
     final presets = context.read<ThemeBloc>().state.presets;
 
     return AppBar(
-      backgroundColor: presets.color_background_primary,
+      backgroundColor: presets.color_background_primary.withAlpha(180),
       centerTitle: true,
       title: Text(
         "Chi tiết công việc",

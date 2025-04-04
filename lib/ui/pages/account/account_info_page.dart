@@ -11,7 +11,7 @@ import 'package:flutter_work_mgmt_app/ui/pages/account/_widgets/staff_detail_wid
 import 'package:flutter_work_mgmt_app/ui/pages/account/_widgets/top_avatar_display.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_work_mgmt_app/data/models/account.dart';
+import 'package:flutter_work_mgmt_app/data/models/accounts.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/account/bloc/account_info_page_repository.dart';
 
@@ -52,7 +52,7 @@ class _AccountInfoPageContent extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: context.theme.colorScheme.primary
                             .darker(20)
-                            .withAlpha(120),
+                            .withAlpha(60),
                       ),
                     ),
                   ),

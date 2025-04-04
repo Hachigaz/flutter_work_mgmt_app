@@ -1,32 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_work_mgmt_app/data/models/notifications.dart';
+import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/current_work/current_work_page.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/works/work_detail/_subpages/task_manage/task_manage.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/notifications/_bloc/page_bloc/notification_page_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/notifications/notification_page.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:flutter_work_mgmt_app/ui/commons/components/menu_frame.dart';
 
 import 'package:flutter_work_mgmt_app/ui/pages/home/home.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/login/login_page.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/projects/_bloc/project_root_repository.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/projects/project_root_page.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/account/account_info_page.dart';
 
 import "_routes/export.dart";
 
 final routes = <RouteBase>[
-  GoRoute(path: "/", redirect: (context, state) => "/login"),
+  GoRoute(path: "/", redirect: (context, state) => "/debug"),
+  // GoRoute(path: "/", redirect: (context, state) => "/login"),
   GoRoute(
     path: "/login",
     name: "login",
     builder: (context, state) {
       return const Scaffold(body: LoginPage());
-    },
-  ),
-  GoRoute(
-    path: "/debug",
-    builder: (context, state) {
-      return WorkItemTaskManagePage();
     },
   ),
   StatefulShellRoute.indexedStack(
@@ -43,6 +40,10 @@ final routes = <RouteBase>[
               return MaterialPage(key: state.pageKey, child: HomePage());
             },
           ),
+          GoRoute(
+            path: "/debug",
+            redirect: (context, state) => "/notification",
+          ),
         ],
       ),
       StatefulShellBranch(
@@ -51,13 +52,7 @@ final routes = <RouteBase>[
             path: "/projects",
             name: "projects",
             pageBuilder: (context, state) {
-              return MaterialPage(
-                key: state.pageKey,
-                child: RepositoryProvider(
-                  create: (context) => ProjectRootRepository(),
-                  child: ProjectRootPage(),
-                ),
-              );
+              return MaterialPage(key: state.pageKey, child: ProjectRootPage());
             },
             routes: projectRoutes,
           ),
@@ -80,22 +75,33 @@ final routes = <RouteBase>[
             path: "/notification",
             name: "notification",
             pageBuilder: (context, state) {
-              return MaterialPage(key: state.pageKey, child: HomePage());
+              return MaterialPage(
+                key: state.pageKey,
+                child: BlocProvider(
+                  create: (context) {
+                    return NotificationPageBloc(
+                      notificationRepo:
+                          context.read<DataRepository<NotificationRecord>>(),
+                    );
+                  },
+                  child: NotificationPage(),
+                ),
+              );
             },
           ),
         ],
       ),
-      StatefulShellBranch(
-        routes: <RouteBase>[
-          GoRoute(
-            path: "/mailbox",
-            name: "mailbox",
-            pageBuilder: (context, state) {
-              return MaterialPage(key: state.pageKey, child: HomePage());
-            },
-          ),
-        ],
-      ),
+      // StatefulShellBranch(
+      //   routes: <RouteBase>[
+      //     GoRoute(
+      //       path: "/mailbox",
+      //       name: "mailbox",
+      //       pageBuilder: (context, state) {
+      //         return MaterialPage(key: state.pageKey, child: HomePage());
+      //       },
+      //     ),
+      //   ],
+      // ),
       StatefulShellBranch(
         routes: <RouteBase>[
           GoRoute(

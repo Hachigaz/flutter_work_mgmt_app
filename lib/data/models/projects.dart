@@ -1,8 +1,8 @@
 import 'package:flutter_work_mgmt_app/data/models/model.dart';
+import 'package:flutter_work_mgmt_app/data/models/reports.dart';
 
 class ProjectRecord extends DataRecord {
   final String? name;
-  final String? nameShort;
   final String? description;
   final String? workAddress;
   final ID? activeWorkItem;
@@ -14,7 +14,6 @@ class ProjectRecord extends DataRecord {
   const ProjectRecord({
     super.id,
     this.name,
-    this.nameShort,
     this.description,
     this.workAddress,
     this.activeWorkItem,
@@ -28,7 +27,6 @@ class ProjectRecord extends DataRecord {
 class WorkItemRecord extends DataRecord {
   final ID? projectId;
   final String? name;
-  final String? nameShort;
   final String? description;
   final int? activeTaskCount;
   final int? completedTaskCount;
@@ -43,7 +41,6 @@ class WorkItemRecord extends DataRecord {
     super.id,
     this.projectId,
     this.name,
-    this.nameShort,
     this.description,
     this.activeTaskCount,
     this.completedTaskCount,
@@ -64,35 +61,33 @@ enum TaskStatus {
   const TaskStatus({required this.label});
 }
 
-// enum TaskType {
-//   recurring(label: "Định kỳ"),
-//   timestamp(label: "Công việc");
+enum TaskPriority {
+  norm(label: "Bình thường"),
+  low(label: "Thấp"),
+  medium(label: "Trung bình"),
+  high(label: "Cao");
 
-//   final String label;
-//   const TaskType({required this.label});
-// }
+  final String label;
+  const TaskPriority({required this.label});
+}
 
 class TaskRecord extends DataRecord {
   final ID? workId;
   final String? name;
-  final String? nameShort;
   final String? description;
   final TaskStatus? status;
-  // final TaskType? type;
-  final ID? closestReport;
-  final ID? formStructureId;
+  final TaskPriority? priority;
+  final RefRecord<ReportScheduleRecord>? closestReport;
   final bool? isActive;
 
   const TaskRecord({
     super.id,
     this.workId,
     this.name,
-    this.nameShort,
     this.description,
     this.status,
-    // this.type,
+    this.priority,
     this.closestReport,
-    this.formStructureId,
     this.isActive,
   });
 }

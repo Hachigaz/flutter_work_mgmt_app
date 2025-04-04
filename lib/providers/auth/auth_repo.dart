@@ -1,14 +1,14 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_work_mgmt_app/providers/app_loader/repos/storage_repo.dart';
+import 'package:flutter_work_mgmt_app/providers/base_loader/repos/storage_repo.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_work_mgmt_app/data/models/account.dart';
+import 'package:flutter_work_mgmt_app/data/models/accounts.dart';
 
 class AuthRepository {
   AccountRecord? _currentAccount;
   StaffRecord? _currentStaffInfo;
 
-  get currentAccount => _currentAccount;
-  get currentStaffInfo => _currentStaffInfo;
+  AccountRecord? get currentAccount => _currentAccount;
+  StaffRecord? get currentStaffInfo => _currentStaffInfo;
 
   final StorageRepository _storageRepo;
 
@@ -29,12 +29,12 @@ class AuthRepository {
     );
 
     StaffRecord staffRecord = StaffRecord(
-      fullName: "Nguyen van a",
+      fullName: "Nhân viên Á Châu",
       dob: DateTime.now(),
       gender: Gender.male,
-      homeAddress: "ABC 123 123",
-      phoneNumber: "123123",
-      email: "a@gmail.com",
+      homeAddress: "273 An Dương Vương",
+      phoneNumber: "0123123123",
+      email: "achau@gmail.com",
       dateEmployed: DateTime.now(),
     );
 

@@ -4,8 +4,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_work_mgmt_app/data/models/model.dart';
-import 'package:flutter_work_mgmt_app/data/models/project.dart';
-import 'package:flutter_work_mgmt_app/data/models/report.dart';
+import 'package:flutter_work_mgmt_app/data/models/projects.dart';
+import 'package:flutter_work_mgmt_app/data/models/reports.dart';
 import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
 
 part "schedule_create_event.dart";

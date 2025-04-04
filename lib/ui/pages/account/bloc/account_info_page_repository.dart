@@ -1,4 +1,4 @@
-import 'package:flutter_work_mgmt_app/data/models/account.dart';
+import 'package:flutter_work_mgmt_app/data/models/accounts.dart';
 
 class AccountInfoPageRepository {
   final AccountRecord _accountRecord;

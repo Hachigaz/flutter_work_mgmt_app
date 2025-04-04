@@ -1,7 +1,7 @@
 part of "report_detail_bloc.dart";
 
 class ReportDetailStateRecordReady
-    extends PageDetailStateRecordReady<ReportSchedule> {
+    extends PageDetailStateRecordReady<ReportScheduleRecord> {
   final TaskReportRecord reportRecord;
 
   const ReportDetailStateRecordReady({

@@ -4,7 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_work_mgmt_app/data/models/project.dart';
+import 'package:flutter_work_mgmt_app/data/models/projects.dart';
 import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/theme_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/description_display_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/loading_widgets/loading_circle_widget.dart';
@@ -32,86 +32,88 @@ class _ProjectDetailPageContent extends StatelessWidget {
     // final colorScheme = context.theme.colorScheme;
     final presets = context.read<ThemeBloc>().state.presets;
 
-    return ListView(
+    return SingleChildScrollView(
       padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-      children: [
-        Container(
-          padding: EdgeInsets.only(bottom: 10),
-          decoration: BoxDecoration(
-            color: presets.color_background_primary,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(12),
-              bottomRight: Radius.circular(12),
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.only(bottom: 10),
+            decoration: BoxDecoration(
+              color: presets.color_background_primary.withAlpha(150),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(12),
+                bottomRight: Radius.circular(12),
+              ),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: padding_lg,
+                horizontal: padding_lg,
+              ),
+              child: _ProjectDetailTopInfoSection(),
             ),
           ),
-          child: Padding(
+          Padding(
             padding: EdgeInsets.symmetric(
-              vertical: padding_lg,
+              vertical: padding_sm,
               horizontal: padding_lg,
             ),
-            child: _ProjectDetailTopInfoSection(),
+            child: _ProjectDetailBottomInfoSection(),
           ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: padding_sm,
-            horizontal: padding_lg,
+          const Divider(
+            color: Colors.grey, // Line color
+            thickness: 1, // Line thickness
+            indent: 16, // Left spacing
+            endIndent: 16, // Right spacing
           ),
-          child: _ProjectDetailBottomInfoSection(),
-        ),
-        const Divider(
-          color: Colors.grey, // Line color
-          thickness: 1, // Line thickness
-          indent: 16, // Left spacing
-          endIndent: 16, // Right spacing
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: padding_sm,
-            horizontal: padding_lg,
+          Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: padding_sm,
+              horizontal: padding_lg,
+            ),
+            child: _ProjectDetailWorkOverviewSection(),
           ),
-          child: _ProjectDetailWorkOverviewSection(),
-        ),
-        const Divider(
-          color: Colors.grey, // Line color
-          thickness: 1, // Line thickness
-          indent: 16, // Left spacing
-          endIndent: 16, // Right spacing
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: padding_sm,
-            horizontal: padding_lg,
+          const Divider(
+            color: Colors.grey, // Line color
+            thickness: 1, // Line thickness
+            indent: 16, // Left spacing
+            endIndent: 16, // Right spacing
           ),
-          child: _ProjectDetailCurrentActiveWorkSection(),
-        ),
-        const Divider(
-          color: Colors.grey, // Line color
-          thickness: 1, // Line thickness
-          indent: 16, // Left spacing
-          endIndent: 16, // Right spacing
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: padding_sm,
-            horizontal: padding_lg,
+          Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: padding_sm,
+              horizontal: padding_lg,
+            ),
+            child: _ProjectDetailCurrentActiveWorkSection(),
           ),
-          child: _ProjectDetailContractOverviewSection(),
-        ),
-        const Divider(
-          color: Colors.grey, // Line color
-          thickness: 1, // Line thickness
-          indent: 16, // Left spacing
-          endIndent: 16, // Right spacing
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: padding_sm,
-            horizontal: padding_lg,
+          const Divider(
+            color: Colors.grey, // Line color
+            thickness: 1, // Line thickness
+            indent: 16, // Left spacing
+            endIndent: 16, // Right spacing
           ),
-          child: _ProjectDetailMenuSection(),
-        ),
-      ],
+          Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: padding_sm,
+              horizontal: padding_lg,
+            ),
+            child: _ProjectDetailContractOverviewSection(),
+          ),
+          const Divider(
+            color: Colors.grey, // Line color
+            thickness: 1, // Line thickness
+            indent: 16, // Left spacing
+            endIndent: 16, // Right spacing
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: padding_sm,
+              horizontal: padding_lg,
+            ),
+            child: _ProjectDetailMenuSection(),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -129,7 +131,7 @@ class ProjectDetailPage extends StatelessWidget {
     final presets = context.read<ThemeBloc>().state.presets;
 
     return AppBar(
-      backgroundColor: presets.color_background_primary,
+      backgroundColor: presets.color_background_primary.withAlpha(150),
       centerTitle: true,
       title: Text(
         "Chi tiết dự án",

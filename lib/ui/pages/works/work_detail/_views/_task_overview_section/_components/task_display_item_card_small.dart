@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_work_mgmt_app/data/models/project.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_work_mgmt_app/data/models/projects.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 
@@ -33,7 +34,7 @@ class TaskDisplayItemCardSmall extends StatelessWidget {
             decoration: BoxDecoration(
               color:
                   itemColor?.withAlpha(150) ??
-                  colorScheme.primary.withAlpha(150),
+                  colorScheme.primary.withAlpha(120),
               borderRadius: BorderRadius.circular(15),
             ),
             child: Column(
@@ -50,7 +51,10 @@ class TaskDisplayItemCardSmall extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.task, color: colorScheme.foreground),
+                              Icon(
+                                Icons.task_alt,
+                                color: colorScheme.foreground,
+                              ),
                               Padding(
                                 padding: EdgeInsets.only(left: 4),
                                 child: Text(
@@ -67,15 +71,18 @@ class TaskDisplayItemCardSmall extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "${taskRecord.nameShort}\n",
-                                  style: typography.xl.copyWith(
-                                    fontWeight: FontWeight.w600,
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: 8),
+                                  child: Text(
+                                    "${taskRecord.name}\n",
+                                    style: typography.xl.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    maxLines: 2,
                                   ),
-                                  maxLines: 2,
                                 ),
                                 Text(
-                                  "Báo cáo gần nhất:",
+                                  "Báo cáo sắp tới:",
                                   style: typography.sm.copyWith(
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -83,8 +90,11 @@ class TaskDisplayItemCardSmall extends StatelessWidget {
                                 Padding(
                                   padding: EdgeInsets.only(top: 4),
                                   child: Text(
-                                    "Báo cáo number one",
-                                    style: typography.base.copyWith(
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    taskRecord.closestReport!.record!.title!,
+                                    style: typography.sm.copyWith(
+                                      fontSize: 10.sp,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -130,7 +140,7 @@ class TaskDisplayItemCardSmall extends StatelessWidget {
                             width: 50,
                             height: 50,
                             child: CircularProgressIndicator(
-                              value: 4 / 6, // 70% progress
+                              value: 7 / 10, // 70% progress
                               strokeWidth: 4.0, // Adjust thickness
                               backgroundColor: colorScheme.foreground.withAlpha(
                                 50,
@@ -143,7 +153,7 @@ class TaskDisplayItemCardSmall extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.only(top: 5),
                             child: Text(
-                              "40/600\n Hoàn thành",
+                              "70.0%\n Hoàn thành",
                               textAlign: TextAlign.center,
                               style: typography.sm.copyWith(
                                 fontWeight: FontWeight.w600,

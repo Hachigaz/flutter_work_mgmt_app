@@ -44,9 +44,9 @@ class WorkItemDetailPage extends StatelessWidget {
 
   AppBar _WorkItemDetailPageHeader(BuildContext context) {
     final typography = context.theme.typography;
-    final colorScheme = context.theme.colorScheme;
+    // final colorScheme = context.theme.colorScheme;
     return AppBar(
-      backgroundColor: colorScheme.primary.withAlpha(0),
+      backgroundColor: Colors.transparent,
       centerTitle: true,
       title: Text(
         "Chi tiết hạng mục",
@@ -65,10 +65,13 @@ class WorkItemDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final presets = context.read<ThemeBloc>().state.presets;
-    return Scaffold(
-      backgroundColor: presets.color_background_primary,
-      appBar: _WorkItemDetailPageHeader(context),
-      body: _WorkItemDetailPageContent(),
+    return ColoredBox(
+      color: context.theme.colorScheme.background,
+      child: Scaffold(
+        backgroundColor: presets.color_background_primary.withAlpha(180),
+        appBar: _WorkItemDetailPageHeader(context),
+        body: _WorkItemDetailPageContent(),
+      ),
     );
   }
 }

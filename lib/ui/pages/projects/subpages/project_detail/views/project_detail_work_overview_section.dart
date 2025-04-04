@@ -211,7 +211,7 @@ class WorkItemDisplayItem extends StatelessWidget {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: presets.color_background_primary,
+          color: presets.color_background_primary.withAlpha(180),
           borderRadius: BorderRadius.circular(15),
         ),
         padding: EdgeInsets.all(padding_xl),

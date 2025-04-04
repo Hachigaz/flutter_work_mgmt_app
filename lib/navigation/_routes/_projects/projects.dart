@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_work_mgmt_app/data/models/model.dart';
-import 'package:flutter_work_mgmt_app/data/models/project.dart';
+import 'package:flutter_work_mgmt_app/data/models/projects.dart';
 import 'package:flutter_work_mgmt_app/navigation/_routes/_projects/_contracts/contracts.dart';
 import 'package:flutter_work_mgmt_app/navigation/_routes/_projects/_reports/reports.dart';
 import 'package:flutter_work_mgmt_app/navigation/_routes/_projects/_tasks/tasks.dart';

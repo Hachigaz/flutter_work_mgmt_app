@@ -76,12 +76,12 @@ class HomePageCalendarInfoSection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           _HomePageCalendarInfoBox(
-            title: "Tổng lịch đã sắp xếp",
+            title: "Tổng công việc đã sắp xếp",
             info: "25",
             boxWidth: 150.w,
           ),
           _HomePageCalendarInfoBox(
-            title: "Tổng lịch chưa sắp xếp",
+            title: "Tổng công việc chưa sắp xếp",
             info: "10",
             boxWidth: 150.w,
           ),

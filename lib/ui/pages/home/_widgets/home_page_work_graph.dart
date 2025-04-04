@@ -5,13 +5,13 @@ import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart'
 import 'package:flutter_work_mgmt_app/ui/commons/utils/helpers/color_helpers.dart';
 import 'package:forui/forui.dart';
 
-class __HomePageRevenueGraphItemItem extends StatelessWidget {
+class __HomePageWorkGraphItem extends StatelessWidget {
   final String _label;
   final double _value;
   final double _max_value;
   final Color _color;
 
-  const __HomePageRevenueGraphItemItem({
+  const __HomePageWorkGraphItem({
     required String label,
     required double value,
     required double max_value,
@@ -25,7 +25,7 @@ class __HomePageRevenueGraphItemItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final typography = context.theme.typography;
     final colorScheme = context.theme.colorScheme;
-
+    const maxGraphHeight = 200.0;
     return Flexible(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,25 +48,28 @@ class __HomePageRevenueGraphItemItem extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(bottom: padding_3xl),
-            child: Text(
-              "${_value.toStringAsFixed(1)} Triệu",
-              style: typography.base
-                  .copyWith(fontWeight: FontWeight.w600)
-                  .copyWith(color: colorScheme.foreground),
-            ),
-          ),
           SizedBox(
-            height: 100.h,
+            height: maxGraphHeight,
             child: Align(
               alignment: Alignment(0, 1),
               child: ColoredBox(
                 color: _color.withAlpha(150),
                 child: SizedBox(
                   width: double.infinity,
-                  height: 100.h * _value / _max_value,
+                  height: maxGraphHeight * _value / _max_value,
                 ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(bottom: 0),
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                _value.toStringAsFixed(0),
+                style: typography.base
+                    .copyWith(fontWeight: FontWeight.w800)
+                    .copyWith(color: colorScheme.foreground),
               ),
             ),
           ),
@@ -76,8 +79,8 @@ class __HomePageRevenueGraphItemItem extends StatelessWidget {
   }
 }
 
-class _HomePageRevenueGraphItem extends StatelessWidget {
-  const _HomePageRevenueGraphItem();
+class _HomePageWorkGraph extends StatelessWidget {
+  const _HomePageWorkGraph();
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +92,7 @@ class _HomePageRevenueGraphItem extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(right: 4),
             child: Icon(
-              Icons.monetization_on_sharp,
+              Icons.grading_sharp,
               size: 20,
               color: colorScheme.primary.withAlpha(180),
             ),
@@ -97,12 +100,12 @@ class _HomePageRevenueGraphItem extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(right: 4),
             child: Text(
-              "Doanh thu và công nợ",
+              "Tổng quan công việc",
               style: typography.sm.copyWith(fontWeight: FontWeight.w700),
             ),
           ),
           Tooltip(
-            message: "Thông tin doanh thu công nợ",
+            message: "Công việc đã thực hiện",
             decoration: BoxDecoration(
               color: colorScheme.background,
               borderRadius: BorderRadius.circular(15),
@@ -123,27 +126,27 @@ class _HomePageRevenueGraphItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            __HomePageRevenueGraphItemItem(
-              label: 'Doanh thu hôm qua',
+            __HomePageWorkGraphItem(
+              label: 'Đã thực hiện trong năm\n',
               value: 90,
               max_value: 100,
               color: const Color.fromARGB(177, 86, 144, 88),
             ),
-            __HomePageRevenueGraphItemItem(
-              label: 'Doanh thu hôm nay',
+            __HomePageWorkGraphItem(
+              label: 'Thực hiện đúng hạn\n',
               value: 80,
               max_value: 100,
               color: const Color.fromARGB(255, 93, 195, 96),
             ),
-            __HomePageRevenueGraphItemItem(
-              label: 'Công nợ đã thanh toán',
-              value: 10,
+            __HomePageWorkGraphItem(
+              label: 'Công việc đang hoạt động\n',
+              value: 60,
               max_value: 100,
               color: const Color.fromARGB(172, 100, 179, 195),
             ),
-            __HomePageRevenueGraphItemItem(
-              label: 'Công nợ chưa thanh toán',
-              value: 40,
+            __HomePageWorkGraphItem(
+              label: 'Công việc trễ hạn\n',
+              value: 4,
               max_value: 100,
               color: const Color.fromARGB(255, 175, 97, 76),
             ),
@@ -170,7 +173,7 @@ class HomePageRevenueGraph extends StatelessWidget {
           horizontal: padding_lg,
           vertical: padding_lg,
         ),
-        child: _HomePageRevenueGraphItem(),
+        child: _HomePageWorkGraph(),
       ),
     );
   }

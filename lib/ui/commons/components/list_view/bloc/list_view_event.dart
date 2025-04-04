@@ -1,7 +1,11 @@
 part of "list_view_bloc.dart";
 
-class ListViewEvent<T extends DataRecord> {
+sealed class ListViewEvent<T extends DataRecord> {
   const ListViewEvent();
+}
+
+class _ListViewEventInit<T extends DataRecord> extends ListViewEvent<T> {
+  const _ListViewEventInit();
 }
 
 class ListViewEventSearchCall<T extends DataRecord> extends ListViewEvent<T> {

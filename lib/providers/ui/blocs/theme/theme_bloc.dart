@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_work_mgmt_app/providers/app_loader/repos/storage_repo.dart';
+import 'package:flutter_work_mgmt_app/providers/base_loader/repos/storage_repo.dart';
 import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/presets/presets.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/loading_widgets/loading_circle_widget.dart';
 import 'package:forui/forui.dart';
@@ -15,14 +15,14 @@ typedef ThemeSet = ({FThemeData light, FThemeData dark});
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   static final Map<String, (ThemeSet, Color)> appThemes = {
-    "Red": (FThemes.red, Colors.red),
-    "Yellow": (FThemes.yellow, Colors.yellow),
-    "Orange": (FThemes.orange, Colors.orange),
-    "Slate": (FThemes.slate, Colors.blueGrey),
-    "Violet": (FThemes.violet, Colors.purpleAccent),
-    "Green": (FThemes.green, Colors.greenAccent),
-    "Rose": (FThemes.rose, Colors.redAccent),
-    "Zinc": (FThemes.zinc, Colors.grey),
+    "Đỏ": (FThemes.red, Colors.red),
+    "Vàng": (FThemes.yellow, Colors.yellow),
+    "Cam": (FThemes.orange, Colors.orange),
+    "Xám nhạt": (FThemes.slate, Colors.blueGrey),
+    "Tím": (FThemes.violet, Colors.purpleAccent),
+    "Xanh lá": (FThemes.green, Colors.greenAccent),
+    "Đỏ hồng": (FThemes.rose, Colors.redAccent),
+    "Xám đậm": (FThemes.zinc, Colors.grey),
   };
   final StorageRepository _storageRepo;
   ThemeBloc({required StorageRepository storageRepo})
@@ -33,7 +33,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
               ThemeBloc
                   .appThemes[storageRepo.localPrefs.getString("appThemeName")]
                   ?.$1 ??
-              appThemes["Red"]!.$1,
+              appThemes["Đỏ"]!.$1,
           appThemeMode: storageRepo.localPrefs.getBool("appThemeMode") ?? false,
         ),
       ) {

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/presets/date_formats.dart';
 import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/theme_bloc.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/components/loading_widgets/loading_text_display_widget.dart';
-import 'package:flutter_work_mgmt_app/ui/commons/components/page_detail/page_detail_bloc.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/projects/subpages/project_detail/bloc/project_detail_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/bloc/list_view_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/list_view_widget.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/search_bar_widget.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_work_mgmt_app/data/models/model.dart';
-import 'package:flutter_work_mgmt_app/data/models/project.dart';
+import 'package:flutter_work_mgmt_app/data/models/projects.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
 
 class _WorkItemListDisplayItem extends StatelessWidget {
@@ -44,10 +46,25 @@ class _WorkItemListDisplayItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 6),
+                    child: Icon(
+                      Icons.library_books_sharp,
+                      color: colorScheme.foreground,
+                    ),
+                  ),
+                  Text(
+                    "Hạng mục",
+                    style: typography.xl.copyWith(fontWeight: FontWeight.w700),
+                  ),
+                ],
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: padding_md),
                 child: Text(
-                  "Work item 1",
+                  _workItemRecord.name!,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: context.theme.typography.xl2.copyWith(
@@ -58,13 +75,16 @@ class _WorkItemListDisplayItem extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: padding_md),
                 child: Text(
-                  "Trạng thái: ${"đang hoạt động"}",
-                  style: typography.base,
+                  "Tiến độ: ${(_workItemRecord.progression! * 100).toStringAsFixed(1)}%",
+                  style: typography.base.copyWith(fontWeight: FontWeight.w600),
                 ),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: padding_md),
-                child: Text("Địa chỉ: ", style: typography.base),
+                child: Text(
+                  "Ngày bắt đầu: ${date_fmat_date.format(_workItemRecord.startDate!)}",
+                  style: typography.base.copyWith(fontWeight: FontWeight.w600),
+                ),
               ),
             ],
           ),
@@ -78,38 +98,42 @@ class _ProjectWorkListPageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final colorScheme = context.theme.colorScheme;
+    final workItemListBloc = ListViewBloc<WorkItemRecord>(
+      dataRepo: context.read<DataRepository<WorkItemRecord>>(),
+    );
     final typography = context.theme.typography;
-
-    return BlocBuilder<ProjectDetailBloc, PageDetailState>(
-      builder: (context, state) {
-        if (state is ProjectDetailStateRecordReady) {
-          if (state.activeWorkItems.isNotEmpty) {
-            return ListView(
-              padding: EdgeInsets.symmetric(
-                vertical: padding_md,
-                horizontal: padding_md,
-              ),
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: padding_sm),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      for (final workItemRecord in state.activeWorkItems)
-                        _WorkItemListDisplayItem(
-                          workItemRecord: workItemRecord,
-                        ),
-                    ],
-                  ),
+    final scrollController = ScrollController();
+    return ListView(
+      controller: scrollController,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(top: 6, bottom: 6, left: 10),
+          child: SearchBarWidget<
+            WorkItemRecord,
+            ListViewStateLoading<WorkItemRecord>,
+            ListViewEventSearchCall<WorkItemRecord>
+          >(
+            hintText: "Nhập tên hạng mục",
+            searchCallCreator:
+                (searchValue) => ListViewEventSearchCall<WorkItemRecord>(
+                  searchValue: searchValue,
                 ),
+            listBloc: workItemListBloc,
+          ),
+        ),
+        ListViewWidget<WorkItemRecord>(
+          listBuilder: (workItemList) {
+            return Column(
+              children: [
+                for (final record in workItemList)
+                  _WorkItemListDisplayItem(workItemRecord: record),
               ],
             );
-          }
-          return Text("Chưa có dữ liệu", style: typography.base);
-        } else {
-          return LoadingTextDisplayWidget();
-        }
-      },
+          },
+          scrollController: scrollController,
+          listBloc: workItemListBloc,
+        ),
+      ],
     );
   }
 }

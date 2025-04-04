@@ -1,24 +1,39 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_work_mgmt_app/data/models/model.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/reports/report_form/_models/models.dart';
 
-// enum ReportSectionType {
-//   numericInput(label: "Số liệu"),
-//   textInput(label: "Văn bản"),
-//   imageInput(label: "Hình ảnh"),
-//   checkboxInput(label: "Chọn nhiều"),
-//   radioInput(label: "Chọn đơn");
+enum ReportScheduleCategory {
+  daily(label: "Báo cáo ngày", icon: CupertinoIcons.arrow_counterclockwise),
+  weekly(label: "Báo cáo tuần", icon: CupertinoIcons.arrow_counterclockwise),
+  monthly(label: "Báo cáo quý", icon: CupertinoIcons.arrow_counterclockwise),
+  quarterly(label: "Báo cáo năm", icon: CupertinoIcons.arrow_counterclockwise),
+  yearly(label: "Báo cáo", icon: Icons.calendar_month_outlined);
 
-//   final String label;
-//   const ReportSectionType({required this.label});
-// }
+  final String label;
+  final IconData icon;
+  const ReportScheduleCategory({required this.label, required this.icon});
+}
 
-// typedef ReportSectionInfoRecord =
-//     ({
-//       ID id,
-//       String title,
-//       ReportSectionType type,
-//       int inputCount,
-//     }); // xài trong template cho các báo cáo
+enum ReportSchedulePriority {
+  normal(label: "Bình thường"),
+  low(label: "Thấp"),
+  medium(label: "Trung bình"),
+  high(label: "Cao");
+
+  final String label;
+  const ReportSchedulePriority({required this.label});
+}
+
+enum ReportScheduleStatus {
+  not_created(label: "Chưa thực hiện"),
+  not_sent(label: "Chưa gửi"),
+  pending_verification(label: "Chờ duyệt"),
+  verified(label: "Đã xác nhận");
+
+  final String label;
+  const ReportScheduleStatus({required this.label});
+}
 
 class ReportFormTemplateRecord extends DataRecord {
   final String formName;
@@ -33,24 +48,28 @@ class ReportFormTemplateRecord extends DataRecord {
   });
 }
 
-class ReportSchedule extends DataRecord {
+class ReportScheduleRecord extends DataRecord {
   //for timestamp schedule type (1 - n)
 
   final ID? taskId;
   final String? title;
+  final ReportScheduleCategory? category;
+  final ReportSchedulePriority? priority;
   final DateTime? dueDate;
   final ID? reportStructure;
-  final bool? isReported;
+  final ReportScheduleStatus? status;
   final ID? reportId;
   final bool? isActive;
 
-  const ReportSchedule({
+  const ReportScheduleRecord({
     super.id,
     this.taskId,
     this.title,
+    this.category,
+    this.priority,
     this.dueDate,
     this.reportStructure,
-    this.isReported,
+    this.status,
     this.reportId,
     this.isActive,
   });

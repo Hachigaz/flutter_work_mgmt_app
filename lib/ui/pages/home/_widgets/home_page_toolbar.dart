@@ -80,14 +80,11 @@ class HomePageToolbar extends StatelessWidget {
             hasNotification: true,
           ),
           _HomePageToolbarIcon(
-            icon: Icons.receipt_long,
-            label: "Đã thu gom",
+            icon: Icons.work,
+            label: "Dự án",
             hasNotification: true,
           ),
-          _HomePageToolbarIcon(
-            icon: CupertinoIcons.profile_circled,
-            label: "Năng lực",
-          ),
+          _HomePageToolbarIcon(icon: Icons.receipt_long, label: "Báo cáo"),
           _HomePageToolbarIcon(
             icon: CupertinoIcons.car_detailed,
             label: "Vi phạm",
@@ -95,9 +92,9 @@ class HomePageToolbar extends StatelessWidget {
           ),
           _HomePageToolbarIcon(
             icon: CupertinoIcons.profile_circled,
-            label: "Tài xế",
+            label: "Hồ sơ",
           ),
-          _HomePageToolbarIcon(icon: Icons.fire_truck, label: "Quản lý xe"),
+          _HomePageToolbarIcon(icon: Icons.fire_truck, label: "Định vị"),
           _HomePageToolbarIcon(
             icon: Icons.speed,
             label: "Định mức",

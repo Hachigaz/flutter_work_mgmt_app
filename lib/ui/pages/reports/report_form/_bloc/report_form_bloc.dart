@@ -7,7 +7,7 @@ import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/reports/report_form/_helpers/helpers.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/reports/bloc/report_detail_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:flutter_work_mgmt_app/data/models/report.dart';
+import 'package:flutter_work_mgmt_app/data/models/reports.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/reports/report_form/_models/form_inputs.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/reports/report_form/_models/models.dart';
 
@@ -129,6 +129,8 @@ class ReportFormBloc extends Bloc<ReportFormEvent, ReportFormState> {
     state.formInputs[event.inputKey] = newInput;
 
     Formz.validate([newInput]);
+
+    print("Validating input ${event.inputKey}");
 
     emit(
       state.copyWith(

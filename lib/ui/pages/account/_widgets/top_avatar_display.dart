@@ -20,14 +20,28 @@ class TopAvatarDisplay extends StatelessWidget {
             height: 130,
           ),
         ),
-        Padding(
-          padding: EdgeInsets.only(top: 33, left: 12),
-          child: Text(
-            staffRecord.fullName!,
-            style: context.theme.typography.xl2.copyWith(
-              fontWeight: FontWeight.w700,
+        Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Positioned(
+              top: 32,
+              right: -30.0,
+              child: FButton.raw(
+                onPress: () {},
+                style: FButtonStyle.ghost,
+                child: Icon(Icons.edit, size: 18),
+              ),
             ),
-          ),
+            Padding(
+              padding: EdgeInsets.only(top: 33, left: 12),
+              child: Text(
+                staffRecord.fullName!,
+                style: context.theme.typography.xl2.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );

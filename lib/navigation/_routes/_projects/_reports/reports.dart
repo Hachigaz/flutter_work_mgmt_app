@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_work_mgmt_app/data/models/model.dart';
-import 'package:flutter_work_mgmt_app/data/models/project.dart';
-import 'package:flutter_work_mgmt_app/data/models/report.dart';
+import 'package:flutter_work_mgmt_app/data/models/projects.dart';
+import 'package:flutter_work_mgmt_app/data/models/reports.dart';
 import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/reports/bloc/report_detail_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/reports/report_form/report_form_view_page.dart';
@@ -30,7 +30,8 @@ final reportRoute = GoRoute(
                 create: (context) {
                   return ReportDetailBloc(
                     recordId: scheduleId,
-                    dataRepo: context.read<DataRepository<ReportSchedule>>(),
+                    dataRepo:
+                        context.read<DataRepository<ReportScheduleRecord>>(),
                     taskReportRepo:
                         context.read<DataRepository<TaskReportRecord>>(),
                   );

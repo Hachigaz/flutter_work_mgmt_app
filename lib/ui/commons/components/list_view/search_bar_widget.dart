@@ -60,7 +60,6 @@ class SearchBarWidget<
               ),
             ),
             const SizedBox(width: 10),
-            if (state is LoadingState) LoadingCircleWidget(),
           ],
         );
       },

@@ -3,11 +3,12 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_work_mgmt_app/data/models/projects.dart';
 import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/list_view_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_list_section.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/swipable_list_view.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/projects/_bloc/project_root_repository.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/projects/_widgets/project_display_item.dart';
 import 'package:forui/forui.dart';
 
@@ -40,9 +41,9 @@ class _PageTitleDisplay extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Text(
-          "Danh sách dự án",
+          "Danh sách dự án được phân công",
           style: typography.lg.copyWith(
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
             color: colorScheme.foreground.withAlpha(200),
             height: 1.2,
           ),
@@ -59,7 +60,6 @@ class _ProjectRootPageContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final typography = context.theme.typography;
     // final colorScheme = context.theme.colorScheme;
-    final projRepo = context.read<ProjectRootRepository>();
     final presets = context.read<ThemeBloc>().state.presets;
 
     return Padding(
@@ -68,101 +68,102 @@ class _ProjectRootPageContent extends StatelessWidget {
         left: padding_2xl,
         right: padding_2xl,
       ),
-      child: ListView(
-        shrinkWrap: true,
-        children: [
-          _PageTitleDisplay(),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: padding_md),
-            child: PageListSection(
-              child: SizedBox(
-                height: 120.h,
-                child: SwipableListView(
-                  viewportFraction: 0.6,
-                  children: [
-                    ProjectItemDisplayLarge(
-                      projectRecord: projRepo.projectRecord,
-                    ),
-                    ProjectItemDisplayLarge(
-                      projectRecord: projRepo.projectRecord,
-                    ),
-                    ProjectItemDisplayLarge(
-                      projectRecord: projRepo.projectRecord,
-                    ),
-                    ProjectItemDisplayLarge(
-                      projectRecord: projRepo.projectRecord,
-                    ),
-                    ProjectItemDisplayLarge(
-                      projectRecord: projRepo.projectRecord,
-                    ),
-                  ],
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _PageTitleDisplay(),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: padding_md),
+              child: PageListSection(
+                child: ListViewWidget<ProjectRecord>(
+                  listBuilder: (itemList) {
+                    return SizedBox(
+                      height: 200,
+                      child: SwipableListView(
+                        viewportFraction: 0.85,
+                        children: [
+                          for (final item in itemList)
+                            ProjectItemDisplayLarge(projectRecord: item),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 20),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: padding_md),
-            child: PageListSection(
-              label: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Dự án đang hoạt động",
-                    style: typography.lg.copyWith(fontWeight: FontWeight.w600),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: presets.button_style_default_rounded,
-                    child: Text("Xem tất cả", style: typography.sm),
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Column(
+            const SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: padding_md),
+              child: PageListSection(
+                label: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ProjectListItem(projectRecord: projRepo.projectRecord),
-                    ProjectListItem(projectRecord: projRepo.projectRecord),
-                    ProjectListItem(projectRecord: projRepo.projectRecord),
-                    ProjectListItem(projectRecord: projRepo.projectRecord),
+                    Text(
+                      "Dự án đang hoạt động",
+                      style: typography.lg.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: presets.button_style_default_rounded,
+                      child: Text("Xem tất cả", style: typography.sm),
+                    ),
                   ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: ListViewWidget<ProjectRecord>(
+                    listBuilder: (itemList) {
+                      return Column(
+                        children: [
+                          for (final item in itemList)
+                            ProjectListItem(projectRecord: item),
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 20),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: padding_md),
-            child: PageListSection(
-              label: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Đã hoàn thành",
-                    style: typography.lg.copyWith(fontWeight: FontWeight.w600),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: presets.button_style_default_rounded,
-                    child: Text("Xem tất cả", style: typography.sm),
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Column(
+            const SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: padding_md),
+              child: PageListSection(
+                label: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ProjectListItem(projectRecord: projRepo.projectRecord),
-                    ProjectListItem(projectRecord: projRepo.projectRecord),
-                    ProjectListItem(projectRecord: projRepo.projectRecord),
-                    ProjectListItem(projectRecord: projRepo.projectRecord),
+                    Text(
+                      "Đã hoàn thành",
+                      style: typography.lg.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: presets.button_style_default_rounded,
+                      child: Text("Xem tất cả", style: typography.sm),
+                    ),
                   ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: ListViewWidget<ProjectRecord>(
+                    listBuilder: (itemList) {
+                      return Column(
+                        children: [
+                          for (final item in itemList)
+                            ProjectListItem(projectRecord: item),
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

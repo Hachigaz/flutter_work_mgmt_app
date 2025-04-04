@@ -1,15 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_work_mgmt_app/data/models/project.dart';
-import 'package:flutter_work_mgmt_app/data/models/report.dart';
+import 'package:flutter_work_mgmt_app/data/models/projects.dart';
+import 'package:flutter_work_mgmt_app/data/models/reports.dart';
 import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_detail/page_detail_bloc.dart';
 
 part "task_detail_state.dart";
 
 class TaskDetailBloc extends PageDetailBloc<TaskRecord> {
-  final DataRepository<ReportSchedule> scheduleRepo;
+  final DataRepository<ReportScheduleRecord> scheduleRepo;
 
   TaskDetailBloc({
     required super.dataRepo,
@@ -29,7 +29,7 @@ class TaskDetailBloc extends PageDetailBloc<TaskRecord> {
     }
     final state = this.state as PageDetailStateRecordReady<TaskRecord>;
 
-    late final List<ReportSchedule> upcomingReportSchedule;
+    late final List<ReportScheduleRecord> upcomingReportSchedule;
     await Future.delayed(Duration(seconds: 1), () {
       upcomingReportSchedule = scheduleRepo.search("").itemList;
     });

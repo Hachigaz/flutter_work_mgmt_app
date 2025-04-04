@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_work_mgmt_app/data/models/project.dart';
-import 'package:flutter_work_mgmt_app/data/models/report.dart';
+import 'package:flutter_work_mgmt_app/data/data_layer.dart';
 import 'package:flutter_work_mgmt_app/providers/auth/auth_repo.dart';
-import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
-import 'package:flutter_work_mgmt_app/data/repositories/project_repository.dart';
-import 'package:flutter_work_mgmt_app/data/repositories/report_form_template_repository.dart';
-import 'package:flutter_work_mgmt_app/data/repositories/report_repository.dart';
-import 'package:flutter_work_mgmt_app/data/repositories/report_schedule_repository.dart';
-import 'package:flutter_work_mgmt_app/data/repositories/task_report_repository.dart';
-import 'package:flutter_work_mgmt_app/data/repositories/task_repository.dart';
-import 'package:flutter_work_mgmt_app/data/repositories/work_item_repository.dart';
-import 'package:flutter_work_mgmt_app/providers/app_loader/app_loader_bloc.dart';
-import 'package:flutter_work_mgmt_app/providers/app_loader/repos/storage_repo.dart';
+import 'package:flutter_work_mgmt_app/providers/base_loader/base_loader_bloc.dart';
+import 'package:flutter_work_mgmt_app/providers/base_loader/repos/storage_repo.dart';
 import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/theme_bloc.dart';
 import 'package:forui/forui.dart';
 import 'package:flutter_work_mgmt_app/navigation/router.dart';
@@ -27,26 +18,26 @@ class App extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
-        //main app loader level
-        return BlocProvider<AppLoaderBloc>(
+        //base loader level
+        return BlocProvider<BaseLoaderBloc>(
           create: (context) {
-            return AppLoaderBloc();
+            return BaseLoaderBloc();
           },
           //repositories loaded from app loader
           child: Builder(
             builder: (context) {
-              return BlocBuilder<AppLoaderBloc, AppLoaderState>(
+              return BlocBuilder<BaseLoaderBloc, BaseLoaderState>(
                 builder: (context, state) {
-                  if (state is AppLoaderStateReady) {
+                  if (state is BaseLoaderStateReady) {
                     return MultiRepositoryProvider(
                       providers: [
                         RepositoryProvider(
                           create: (context) => state.storageRepo,
                         ),
                       ],
-                      //data level providers
                       child: Builder(
                         builder: (context) {
+                          //data level providers
                           return MultiRepositoryProvider(
                             providers: [
                               RepositoryProvider<AuthRepository>(
@@ -55,31 +46,26 @@ class App extends StatelessWidget {
                                       context.read<StorageRepository>(),
                                     ),
                               ),
-                              RepositoryProvider<DataRepository<ProjectRecord>>(
-                                create: (context) => ProjectRepository(),
+                              RepositoryProvider.value(
+                                value: dataLayer.projectRepository,
                               ),
-                              RepositoryProvider<
-                                DataRepository<WorkItemRecord>
-                              >(create: (context) => WorkItemRepository()),
-                              RepositoryProvider<DataRepository<TaskRecord>>(
-                                create: (context) => TaskRepository(),
+                              RepositoryProvider.value(
+                                value: dataLayer.workItemRepository,
                               ),
-                              RepositoryProvider<
-                                DataRepository<ReportSchedule>
-                              >(
-                                create: (context) => ReportScheduleRepository(),
+                              RepositoryProvider.value(
+                                value: dataLayer.taskRepository,
                               ),
-                              RepositoryProvider<
-                                DataRepository<TaskReportRecord>
-                              >(create: (context) => ReportRepository()),
-                              RepositoryProvider<
-                                DataRepository<TaskReportRecord>
-                              >(create: (context) => TaskReportRepository()),
-                              RepositoryProvider<
-                                DataRepository<ReportFormTemplateRecord>
-                              >(
-                                create:
-                                    (context) => ReportFormTemplateRepository(),
+                              RepositoryProvider.value(
+                                value: dataLayer.reportScheduleRepository,
+                              ),
+                              RepositoryProvider.value(
+                                value: dataLayer.taskReportRepository,
+                              ),
+                              RepositoryProvider.value(
+                                value: dataLayer.reportFormTemplateRepository,
+                              ),
+                              RepositoryProvider.value(
+                                value: dataLayer.notificationRepository,
                               ),
                             ],
 
@@ -97,6 +83,7 @@ class App extends StatelessWidget {
                               child: MaterialApp.router(
                                 title: 'QLDA',
                                 routerConfig: router,
+                                debugShowCheckedModeBanner: false,
                                 builder:
                                     (
                                       context,
