@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_work_mgmt_app/data/data_layer.dart';
 import 'package:flutter_work_mgmt_app/data/models/model.dart';
 import 'package:flutter_work_mgmt_app/data/models/projects.dart';
 import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';

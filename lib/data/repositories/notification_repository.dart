@@ -8,7 +8,7 @@ class _NotificationRepository extends DataRepository<NotificationRecord> {
 
   @override
   ListReturnResult<NotificationRecord> search(String searchValue) {
-    return (itemList: _generateItems(count: 10), isLast: true);
+    return (itemList: _generateItems(count: 10), isLast: false);
   }
 
   List<NotificationRecord> _generateItems({int count = 3}) {

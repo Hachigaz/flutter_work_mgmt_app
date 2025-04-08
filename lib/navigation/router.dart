@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_work_mgmt_app/data/models/notifications.dart';
-import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/current_work/current_work_page.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/notifications/_bloc/page_bloc/notification_page_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/notifications/notification_page.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,8 +13,8 @@ import 'package:flutter_work_mgmt_app/ui/pages/account/account_info_page.dart';
 import "_routes/export.dart";
 
 final routes = <RouteBase>[
-  GoRoute(path: "/", redirect: (context, state) => "/debug"),
-  // GoRoute(path: "/", redirect: (context, state) => "/login"),
+  // GoRoute(path: "/", redirect: (context, state) => "/debug"),
+  GoRoute(path: "/", redirect: (context, state) => "/login"),
   GoRoute(
     path: "/login",
     name: "login",
@@ -77,15 +73,7 @@ final routes = <RouteBase>[
             pageBuilder: (context, state) {
               return MaterialPage(
                 key: state.pageKey,
-                child: BlocProvider(
-                  create: (context) {
-                    return NotificationPageBloc(
-                      notificationRepo:
-                          context.read<DataRepository<NotificationRecord>>(),
-                    );
-                  },
-                  child: NotificationPage(),
-                ),
+                child: NotificationPage(),
               );
             },
           ),
