@@ -8,7 +8,7 @@ import 'package:flutter_work_mgmt_app/ui/pages/reports/report_form/_helpers/help
 import 'package:flutter_work_mgmt_app/ui/pages/reports/bloc/report_detail_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:flutter_work_mgmt_app/data/models/reports.dart';
-import 'package:flutter_work_mgmt_app/ui/pages/reports/report_form/_models/form_inputs.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/reports/report_form/_models/_inputs/form_inputs.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/reports/report_form/_models/models.dart';
 
 part "report_form_event.dart";

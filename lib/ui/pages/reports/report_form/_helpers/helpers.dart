@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter_work_mgmt_app/ui/pages/reports/report_form/_models/form_inputs.dart';
+import 'package:flutter_work_mgmt_app/ui/pages/reports/report_form/_models/_inputs/form_inputs.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/reports/report_form/_models/models.dart';
 import 'package:formz/formz.dart';
 

@@ -1,7 +1,14 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_work_mgmt_app/providers/base_loader/repos/storage_repo.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_work_mgmt_app/data/models/accounts.dart';
+
+part "models.dart";
+
+const _userTokenStorageLabels = "user_tokens";
 
 class AuthRepository {
   AccountRecord? _currentAccount;
@@ -16,7 +23,10 @@ class AuthRepository {
     : _storageRepo = storageRepo,
       super();
 
-  Future<bool> login({required String accountname, required String password}) {
+  Future<bool> login({
+    required String username,
+    required String password,
+  }) async {
     AccountRecord? accountRecord = AccountRecord(
       id: 0,
       staffId: 0,
@@ -38,83 +48,82 @@ class AuthRepository {
       dateEmployed: DateTime.now(),
     );
 
-    Future<bool> result = Future<bool>.delayed(
-      Duration(seconds: 2),
-      () => true,
+    final result = await http.post(
+      Uri.parse("${dotenv.env["API_URL"]}/api/auth/login"),
+      headers: <String, String>{},
+      body: {"username": username, "password": password},
     );
-    result = result.then((value) {
-      _postLoginInit(accountRecord: accountRecord, staffRecord: staffRecord);
-      return value;
-    });
-    //login logic
 
-    return result;
+    //login logic
+    _postLoginInit(accountRecord: accountRecord, staffRecord: staffRecord);
+
+    return true;
   }
 
   Future<bool> pre_login() async {
-    final loginTokenStr = await _storageRepo.secureStorage.read(
-      key: "login_tok",
-    );
-    final loginTokExprStr = await _storageRepo.secureStorage.read(
-      key: "login_tok_expr",
-    );
+    final userTokenData = await _getUserTokens();
+    bool isLoginSuccess = false;
 
-    if (loginTokenStr != null) {
-      //check login token if it is still valid
-      final loginTokExpr = DateTime.parse(loginTokExprStr!);
+    if (userTokenData == null) {
+      return false;
+    }
 
-      if (loginTokExpr.isAfter(DateTime.now().toUtc())) {
-        await http.post(
-          Uri.http(dotenv.env["API_URL"]!, "/api/login/token", {}),
-          headers: {},
-          body: {"login_token": loginTokenStr},
-        );
+    final loginToken = userTokenData.access_token.token;
+    final loginTokExpr = userTokenData.access_token.token_expr;
+
+    if (loginTokExpr.isAfter(DateTime.now().toUtc())) {
+      final result = await http.post(
+        Uri.http(dotenv.env["API_URL"]!, "/api/login/token", {}),
+        headers: {},
+        body: {"access_token": loginToken},
+      );
+
+      if (result.statusCode == 200) {
+        isLoginSuccess = true;
       }
     }
 
     //check refresh token if it is still valid
-    final refreshTokenStr = await _storageRepo.secureStorage.read(
-      key: "refresh_tok",
-    );
-    final refreshTokExprStr = await _storageRepo.secureStorage.read(
-      key: "refresh_tok_expr",
-    );
+    final refreshToken = userTokenData.refresh_token.token;
+    final refreshTokExpr = userTokenData.refresh_token.token_expr;
 
-    if (refreshTokenStr != null) {
-      final refreshTokExpr = DateTime.parse(refreshTokExprStr!);
+    if (refreshTokExpr.isAfter(DateTime.now().toUtc())) {
+      final result = await http.post(
+        Uri.http(dotenv.env["API_URL"]!, "/api/login/refresh", {}),
+        headers: {},
+        body: {"refresh_token": refreshToken},
+      );
 
-      if (refreshTokExpr.isAfter(DateTime.now().toUtc())) {
-        await http.post(
-          Uri.http(dotenv.env["API_URL"]!, "/api/login/refresh", {}),
-          headers: {},
-          body: {},
-        );
+      if (result.statusCode == 200) {
+        isLoginSuccess = true;
       }
     }
 
-    _postLoginInit(
-      accountRecord: AccountRecord(
-        id: 0,
-        staffId: 0,
-        loginName: "abc123123",
-        avatar: "avatar.jpg",
-        password: null,
-        isActive: true,
-        dateCreated: DateTime.now(),
-        lastLogin: DateTime.now(),
-      ),
-      staffRecord: StaffRecord(
-        fullName: "Nguyen van a",
-        dob: DateTime.now(),
-        gender: Gender.male,
-        homeAddress: "ABC 123 123",
-        phoneNumber: "123123",
-        email: "a@gmail.com",
-        dateEmployed: DateTime.now(),
-      ),
-    );
+    if (isLoginSuccess) {
+      _postLoginInit(
+        accountRecord: AccountRecord(
+          id: 0,
+          staffId: 0,
+          loginName: "abc123123",
+          avatar: "avatar.jpg",
+          password: null,
+          isActive: true,
+          dateCreated: DateTime.now(),
+          lastLogin: DateTime.now(),
+        ),
+        staffRecord: StaffRecord(
+          fullName: "Nguyen van a",
+          dob: DateTime.now(),
+          gender: Gender.male,
+          homeAddress: "ABC 123 123",
+          phoneNumber: "123123",
+          email: "a@gmail.com",
+          dateEmployed: DateTime.now(),
+        ),
+      );
+    }
 
-    return Future<bool>.delayed(Duration.zero, () => true);
+    return Future<bool>.delayed(Duration.zero, () => isLoginSuccess);
   }
 
   void logout() {
@@ -129,27 +138,39 @@ class AuthRepository {
     _currentStaffInfo = staffRecord;
   }
 
-  void _saveRefreshToken(String refresh_tok, DateTime refresh_tok_expr) {
-    _storageRepo.secureStorage.write(key: "refresh_tok", value: refresh_tok);
+  Future<void> _saveAuthTokens({
+    TokenData? accessToken,
+    TokenData? refreshToken,
+    TokenData? userToken,
+  }) async {
+    final oldTokenData = await _getUserTokens() as UserTokenData;
+
     _storageRepo.secureStorage.write(
-      key: "refresh_tok_expr",
-      value: refresh_tok_expr.toString(),
+      key: _userTokenStorageLabels,
+      value: jsonEncode(
+        UserTokenData(
+          access_token: accessToken ?? oldTokenData.access_token,
+          refresh_token: refreshToken ?? oldTokenData.refresh_token,
+          user_token: userToken ?? oldTokenData.user_token,
+        ),
+      ),
     );
   }
 
-  void _saveLoginToken(String login_tok, DateTime login_tok_expr) {
-    _storageRepo.secureStorage.write(key: "login_tok", value: login_tok);
-    _storageRepo.secureStorage.write(
-      key: "login_tok_expr",
-      value: login_tok_expr.toString(),
+  Future<UserTokenData?> _getUserTokens() async {
+    final userTokensStr = await _storageRepo.secureStorage.read(
+      key: "user_tokens",
     );
+
+    if (userTokensStr == null) {
+      return null;
+    }
+
+    return UserTokenData.fromJson(jsonDecode(userTokensStr));
   }
 
   void _removeAuthTokens() {
-    _storageRepo.secureStorage.delete(key: "login_tok");
-    _storageRepo.secureStorage.delete(key: "login_tok_expr");
-    _storageRepo.secureStorage.delete(key: "refresh_tok");
-    _storageRepo.secureStorage.delete(key: "refresh_tok_expr");
+    _storageRepo.secureStorage.delete(key: _userTokenStorageLabels);
 
     //send request to server to revoke tokens
   }

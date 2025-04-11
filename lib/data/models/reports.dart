@@ -13,6 +13,14 @@ enum ReportScheduleCategory {
   final String label;
   final IconData icon;
   const ReportScheduleCategory({required this.label, required this.icon});
+
+  Map<String, dynamic> toJson() => {"name": name};
+
+  static ReportScheduleCategory fromName(String name) {
+    return ReportScheduleCategory.values.firstWhere(
+      (value) => value.name == name,
+    );
+  }
 }
 
 enum ReportSchedulePriority {
@@ -23,6 +31,14 @@ enum ReportSchedulePriority {
 
   final String label;
   const ReportSchedulePriority({required this.label});
+
+  Map<String, dynamic> toJson() => {"name": name};
+
+  static ReportSchedulePriority fromName(String name) {
+    return ReportSchedulePriority.values.firstWhere(
+      (value) => value.name == name,
+    );
+  }
 }
 
 enum ReportScheduleStatus {
@@ -33,6 +49,14 @@ enum ReportScheduleStatus {
 
   final String label;
   const ReportScheduleStatus({required this.label});
+
+  Map<String, dynamic> toJson() => {"name": name};
+
+  static ReportScheduleStatus fromName(String name) {
+    return ReportScheduleStatus.values.firstWhere(
+      (value) => value.name == name,
+    );
+  }
 }
 
 class ReportFormTemplateRecord extends DataRecord {
@@ -46,6 +70,22 @@ class ReportFormTemplateRecord extends DataRecord {
     required this.description,
     required this.formStructureData,
   });
+
+  @override
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "formName": formName,
+    "description": description,
+    "formStructureData": formStructureData,
+  };
+
+  factory ReportFormTemplateRecord.fromJson(Map<String, dynamic> json) =>
+      ReportFormTemplateRecord(
+        id: json["id"],
+        formName: json["formName"],
+        description: json["description"],
+        formStructureData: json["formStructureData"],
+      );
 }
 
 class ReportScheduleRecord extends DataRecord {
@@ -73,6 +113,34 @@ class ReportScheduleRecord extends DataRecord {
     this.reportId,
     this.isActive,
   });
+
+  @override
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "taskId": taskId,
+    "title": title,
+    "category": category,
+    "priority": priority,
+    "dueDate": dueDate,
+    "reportStructure": reportStructure,
+    "status": status,
+    "reportId": reportId,
+    "isActive": isActive,
+  };
+
+  factory ReportScheduleRecord.fromJson(Map<String, dynamic> json) =>
+      ReportScheduleRecord(
+        id: json["id"],
+        taskId: json["taskId"],
+        title: json["title"],
+        category: ReportScheduleCategory.fromName(json["category"]),
+        priority: ReportSchedulePriority.fromName(json["priority"]),
+        dueDate: json["dueDate"],
+        reportStructure: json["reportStructure"],
+        status: ReportScheduleStatus.fromName(json["status"]),
+        reportId: json["reportId"],
+        isActive: json["isActive"],
+      );
 }
 
 // enum RecurringType {
@@ -135,4 +203,34 @@ class TaskReportRecord extends DataRecord {
     this.reportData,
     this.isActive,
   });
+
+  @override
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "scheduleId": scheduleId,
+    "dateCreated": dateCreated,
+    "createdBy": createdBy,
+    "lastUpdated": lastUpdated,
+    "lastUpdatedBy": lastUpdatedBy,
+    "isSubmitted": isSubmitted,
+    "submittedDate": submittedDate,
+    "verifiedBy": verifiedBy,
+    "reportData": reportData,
+    "isActive": isActive,
+  };
+
+  factory TaskReportRecord.fromJson(Map<String, dynamic> json) =>
+      TaskReportRecord(
+        id: json["id"],
+        scheduleId: json["scheduleId"],
+        dateCreated: json["dateCreated"],
+        createdBy: json["createdBy"],
+        lastUpdated: json["lastUpdated"],
+        lastUpdatedBy: json["lastUpdatedBy"],
+        isSubmitted: json["isSubmitted"],
+        submittedDate: json["submittedDate"],
+        verifiedBy: json["verifiedBy"],
+        reportData: json["reportData"],
+        isActive: json["isActive"],
+      );
 }

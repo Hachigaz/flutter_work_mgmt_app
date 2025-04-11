@@ -17,7 +17,7 @@ class ReportScheduleListItemWidget extends StatelessWidget {
     context.push("${context.namedLocation("reports")}/$scheduleId/detail");
   }
 
-  const ReportScheduleListItemWidget({required this.schedule});
+  const ReportScheduleListItemWidget({super.key, required this.schedule});
   @override
   Widget build(BuildContext context) {
     final colorScheme = context.theme.colorScheme;

@@ -5,6 +5,8 @@ import 'package:forui/forui.dart';
 const double _fieldPadding = 20;
 
 class WorkItemCreatePage extends StatelessWidget {
+  const WorkItemCreatePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = context.theme.colorScheme;

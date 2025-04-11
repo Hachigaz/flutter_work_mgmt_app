@@ -4,6 +4,8 @@ abstract class DataRecord {
   final ID? id;
 
   const DataRecord({required this.id});
+
+  Map<String, dynamic> toJson();
 }
 
 class RefRecord<T extends DataRecord> {
