@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_work_mgmt_app/data/models/projects.dart';
 import 'package:flutter_work_mgmt_app/data/models/reports.dart';
 import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
-import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/theme/theme_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_items/report_schedule_display_item_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/bloc/list_view_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/list_view_widget.dart';

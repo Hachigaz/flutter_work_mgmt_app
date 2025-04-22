@@ -6,7 +6,7 @@ import 'package:flutter_work_mgmt_app/providers/auth/auth_repo.dart';
 import 'package:flutter_work_mgmt_app/providers/backend_socket/bloc/backend_socket_bloc.dart';
 import 'package:flutter_work_mgmt_app/providers/base_loader/base_loader_bloc.dart';
 import 'package:flutter_work_mgmt_app/providers/base_loader/repos/storage_repo.dart';
-import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/theme/theme_bloc.dart';
 import 'package:forui/forui.dart';
 import 'package:flutter_work_mgmt_app/navigations/router.dart';
 

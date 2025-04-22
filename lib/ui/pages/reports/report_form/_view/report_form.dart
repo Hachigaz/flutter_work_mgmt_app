@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/theme/theme_bloc.dart';
 import 'package:forui/forui.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/input_fields/image_field.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/page_list_section.dart';

@@ -4,7 +4,7 @@ import 'package:flutter_color/flutter_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_work_mgmt_app/data/models/reports.dart';
 import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
-import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/theme/theme_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/bloc/list_view_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/list_view_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/search_bar_widget.dart';

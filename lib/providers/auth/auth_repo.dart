@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_work_mgmt_app/providers/base_loader/repos/storage_repo.dart';
@@ -53,6 +52,12 @@ class AuthRepository {
       headers: <String, String>{},
       body: {"username": username, "password": password},
     );
+
+    if(result.statusCode==200){
+      
+    }else{
+
+    }
 
     //login logic
     _postLoginInit(accountRecord: accountRecord, staffRecord: staffRecord);

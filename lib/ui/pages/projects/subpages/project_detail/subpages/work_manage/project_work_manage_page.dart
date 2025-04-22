@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_work_mgmt_app/data/repositories/data_repository.dart';
-import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/presets/date_formats.dart';
-import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/theme/presets/date_formats.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/theme/theme_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/bloc/list_view_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/list_view_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/components/list_view/search_bar_widget.dart';

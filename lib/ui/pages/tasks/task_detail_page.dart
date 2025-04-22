@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/theme/theme_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/tasks/_subpages/task_info_section.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/tasks/_subpages/task_report_info_section/task_report_info_section.dart';
 import 'package:forui/forui.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_work_mgmt_app/data/models/accounts.dart';
-import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/presets/date_formats.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/theme/presets/date_formats.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/helpers/color_helpers.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/account/bloc/account_info_page_repository.dart';
 import 'package:forui/forui.dart';

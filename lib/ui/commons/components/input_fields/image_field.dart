@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_color/flutter_color.dart';
-import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/theme/theme_bloc.dart';
 import 'package:forui/forui.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';

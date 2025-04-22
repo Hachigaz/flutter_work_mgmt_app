@@ -4,7 +4,7 @@ import 'package:flutter_color/flutter_color.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_work_mgmt_app/providers/auth/auth_repo.dart';
-import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/theme/theme_bloc.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/account/_widgets/account_detail_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/account/_widgets/option_menu_widget.dart';
 import 'package:flutter_work_mgmt_app/ui/pages/account/_widgets/staff_detail_widget.dart';

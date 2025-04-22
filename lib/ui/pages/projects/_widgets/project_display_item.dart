@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/theme_bloc.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/theme/theme_bloc.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_work_mgmt_app/data/models/model.dart';
 import 'package:flutter_work_mgmt_app/data/models/projects.dart';
 import 'package:flutter_work_mgmt_app/ui/commons/utils/consts/padding_defs.dart';
-import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/presets/date_formats.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/theme/presets/date_formats.dart';
 
 void _onPressDetailButton({
   required BuildContext context,

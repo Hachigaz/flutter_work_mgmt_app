@@ -3,7 +3,7 @@ import 'package:flutter_color/flutter_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_work_mgmt_app/data/models/model.dart' show ID;
 import 'package:flutter_work_mgmt_app/data/models/reports.dart';
-import 'package:flutter_work_mgmt_app/providers/ui/blocs/theme/presets/date_formats.dart';
+import 'package:flutter_work_mgmt_app/providers/ui/theme/presets/date_formats.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 
